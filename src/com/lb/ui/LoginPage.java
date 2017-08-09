@@ -180,12 +180,21 @@ public class LoginPage extends JFrame {
 		JButton btn_login = new JButton("登   录");
 		btn_login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User u = new User(username.getText(),new String(passwordField.getPassword()));
-				//IUser user = new IUserImpl();
-				System.out.println(UserService.loginService(u));
-				if(UserService.loginService(u)>=1){
-					JOptionPane.showMessageDialog(LoginPage.this, "正在登陆。。。。!","提示",JOptionPane.INFORMATION_MESSAGE);
+				if(rbtn_user.isSelected()){
+					User u = new User(username.getText(),new String(passwordField.getPassword()));
+					//IUser user = new IUserImpl();
+					//System.out.println(UserService.loginService(u));
+					if(UserService.loginService(u)>=1){
+						//JOptionPane.showMessageDialog(LoginPage.this, "正在登陆。。。。!","提示",JOptionPane.INFORMATION_MESSAGE);
+						MainPage.selectUserId=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
+						LoginPage.this.dispose();
+						new MainPage().setVisible(true);
+						
+					}
+				}else{
+					System.out.println("你不是管理员！！");
 				}
+				
 				
 			}
 		});

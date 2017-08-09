@@ -15,6 +15,15 @@ public interface IUser {
 	
 	boolean userRegister(User user);  //用户注册接口
 	
+	User getUserInfo(int id) ;  //的用户信息接口
+	
+	Integer getUserId(String username,String password);//获得id
+	
+	
+	
+	
+	
+	//String getInfoById(String key,int id);       //通过Id得到key
 	//boolean userUpdateInfo(User user); //用户修改个人信息
 	
 }

@@ -16,6 +16,15 @@ public class UserService {
 		return user.userRegister(u);
 	}
 	
+	
+	public static User getUserInfoService(int id){				
+		return user.getUserInfo(id);		
+	}
+	
+	public static Integer getUserIdService(String name,String password){
+		
+		return user.getUserId(name, password);
+	}
 		
 	//测试
 	public static void main(String[] args) {

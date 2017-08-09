@@ -79,7 +79,76 @@ public class IUserImpl implements IUser {
 		User user = new User("55","55","55",0,df.format(new Date()));
 		System.out.println(iu.userRegister(user));
 	}
+
+	@Override
+	public User getUserInfo(int id) {
+		if(connection==null){
+			return null;
+		}	
+		User user = new User(); 
+		try {
+			String sql = "select username,phone,email from [user] where user_Id =?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()){
+				user.setUsername(resultSet.getString(1));
+				user.setPhone(resultSet.getString(2));
+				user.setEmail(resultSet.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+				try {
+					if(preparedStatement!=null){
+						preparedStatement.close();
+					}
+					if(resultSet!=null){
+						resultSet.close();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return user;
+	}
 	
-	
+	@Override
+	public Integer getUserId(String username,String password ){
+		
+		if(connection==null){
+			return null;
+		}
+		Integer id = null;
+		try {
+			String sql = "select user_Id from [user] where username =? and password=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet.next()){
+				id=resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+				try {
+					if(preparedStatement!=null){
+						preparedStatement.close();
+					}
+					if(resultSet!=null){
+						resultSet.close();
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return id;
+		
+	}
 
 }
