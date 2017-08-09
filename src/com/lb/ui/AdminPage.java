@@ -198,7 +198,7 @@ public class AdminPage extends JFrame {
 		label.setBounds(20, 182, 99, 38);
 		contentPane.add(label);
 		
-		JLabel label_1 = new JLabel("修改信息");
+		JLabel label_1 = new JLabel("修改商品");
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
