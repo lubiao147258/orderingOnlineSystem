@@ -30,6 +30,8 @@ import com.lb.util.CheckEmail;
 import com.lb.util.DBManager;
 
 import javax.swing.JTable;
+import javax.swing.JList;
+import javax.swing.JPasswordField;
 
 public class MainPage extends JFrame {
 
@@ -43,6 +45,8 @@ public class MainPage extends JFrame {
 	private JPanel panel_gerenziliao;
 	private JPanel panel_dizhiguanli;
 	private Point origin = new Point();
+	private JPasswordField passwordField1;
+	private JPasswordField passwordField2;
 
 	/**
 	 * Launch the application.
@@ -65,7 +69,7 @@ public class MainPage extends JFrame {
 	 * Create the frame.
 	 */
 	public MainPage() {
-		System.out.println(selectUserId);
+		//System.out.println(selectUserId);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -200,6 +204,7 @@ public class MainPage extends JFrame {
 		panel.add(label_wodedingdan);
 		
 		//点餐页面
+		/*
 		panel_buy = new JPanel();
 		panel_buy.setBounds(24, 108, 753, 463);
 		contentPane.add(panel_buy);
@@ -230,7 +235,7 @@ public class MainPage extends JFrame {
 		panel_cart.setVisible(false);
 		
 		JLabel lblNewLabel_1 = new JLabel("购物车页面");
-		panel_cart.add(lblNewLabel_1);
+		panel_cart.add(lblNewLabel_1);*/
 		
 		//个人中心页面
 		panel_center = new JPanel();
@@ -362,7 +367,7 @@ public class MainPage extends JFrame {
 		lab_line.setOpaque(true);
 		
 		//个人资料panel
-		
+		/*
 		panel_gerenziliao = new JPanel();
 		panel_gerenziliao.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_gerenziliao);
@@ -490,7 +495,10 @@ public class MainPage extends JFrame {
 		label_wodeyouxiang3.setBounds(315, 319, 81, 15);
 		panel_gerenziliao.add(label_wodeyouxiang3);
 		
+		*/
+		
 		//地址管理panel
+		/*
 		panel_dizhiguanli = new JPanel();
 		panel_dizhiguanli.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_dizhiguanli);
@@ -518,6 +526,70 @@ public class MainPage extends JFrame {
 		lb_add.setForeground(Color.GRAY);
 		lb_add.setBounds(146, 16, 81, 15);
 		panel_dizhiguanli.add(lb_add);
+		*/
+		JPanel panel_xiugaimima = new JPanel();
+		panel_xiugaimima.setBounds(186, 10, 557, 435);
+		panel_center.add(panel_xiugaimima);
+		panel_xiugaimima.setLayout(null);
+		
+		JLabel label_xiugaimima = new JLabel("修改密码");
+		label_xiugaimima.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+		label_xiugaimima.setHorizontalAlignment(SwingConstants.CENTER);
+		label_xiugaimima.setBounds(10, 10, 102, 22);
+		panel_xiugaimima.add(label_xiugaimima);
+		
+		JLabel lab_yuanshimima = new JLabel("请输入原始密码：");
+		lab_yuanshimima.setHorizontalAlignment(SwingConstants.LEFT);
+		lab_yuanshimima.setForeground(Color.GRAY);
+		lab_yuanshimima.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		lab_yuanshimima.setBounds(35, 77, 119, 29);
+		panel_xiugaimima.add(lab_yuanshimima);
+		
+		JLabel lab_xinmima = new JLabel("请输入新密码：");
+		lab_xinmima.setHorizontalAlignment(SwingConstants.LEFT);
+		lab_xinmima.setForeground(Color.GRAY);
+		lab_xinmima.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		lab_xinmima.setBounds(35, 183, 119, 29);
+		panel_xiugaimima.add(lab_xinmima);
+		
+		passwordField1 = new JPasswordField();
+		passwordField1.setEchoChar('★');
+		passwordField1.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		passwordField1.setBounds(160, 73, 238, 39);
+		panel_xiugaimima.add(passwordField1);
+		
+		passwordField2 = new JPasswordField();
+		passwordField2.setEchoChar('★');
+		passwordField2.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		passwordField2.setBounds(160, 179, 238, 39);
+		panel_xiugaimima.add(passwordField2);
+		
+		JLabel label_submit = new JLabel("提    交");
+		label_submit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_submit.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_submit.setBackground(new Color(0,191,255));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_submit.setBackground(new Color(7,50,93));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_submit.setBackground(new Color(18,150,193));
+			}
+		});
+		label_submit.setOpaque(true);
+		label_submit.setBackground(new Color(0, 191, 255));
+		label_submit.setHorizontalAlignment(SwingConstants.CENTER);
+		label_submit.setForeground(Color.WHITE);
+		label_submit.setFont(new Font("微软雅黑", Font.BOLD, 20));
+		label_submit.setBounds(164, 301, 119, 39);
+		panel_xiugaimima.add(label_submit);
 		
 		
 		
