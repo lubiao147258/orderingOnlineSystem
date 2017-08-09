@@ -15,4 +15,6 @@ public interface IUser {
 	
 	boolean userRegister(User user);  //用户注册接口
 	
+	//boolean userUpdateInfo(User user); //用户修改个人信息
+	
 }

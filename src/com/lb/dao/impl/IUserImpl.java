@@ -12,7 +12,13 @@ import com.lb.dao.IUser;
 import com.lb.entity.User;
 import com.lb.util.DBManager;
 
-
+/**
+ * 
+ * @描述   用户接口实现类
+ * @作者 lubiao
+ * @时间 2017年8月9日-上午8:56:42
+ *
+ */
 public class IUserImpl implements IUser {
 	
 	private static Statement statement = null;
@@ -73,5 +79,7 @@ public class IUserImpl implements IUser {
 		User user = new User("55","55","55",0,df.format(new Date()));
 		System.out.println(iu.userRegister(user));
 	}
+	
+	
 
 }

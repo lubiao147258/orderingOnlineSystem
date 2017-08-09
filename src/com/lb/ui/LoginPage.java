@@ -83,7 +83,7 @@ public class LoginPage extends JFrame {
 		panel.add(btn_close);
 		btn_close.setBackground(new Color(51, 153, 255));
 		btn_close.setToolTipText("关闭");
-		btn_close.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\错误.png"));
+		btn_close.setIcon(new ImageIcon(LoginPage.class.getResource("/image/错误.png")));
 		btn_close.setFocusPainted(false);
 		btn_close.setBorderPainted(false);
 		
@@ -105,7 +105,7 @@ public class LoginPage extends JFrame {
 				btn_min.setBackground(new Color(51, 153, 255));
 			}
 		});
-		btn_min.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\最小化.png"));
+		btn_min.setIcon(new ImageIcon(LoginPage.class.getResource("/image/最小化.png")));
 		btn_min.setToolTipText("关闭");
 		btn_min.setFocusPainted(false);
 		btn_min.setBorderPainted(false);
@@ -214,6 +214,21 @@ public class LoginPage extends JFrame {
 		btn_login.setFocusPainted(false);
 		btn_login.setBorderPainted(false);
 		contentPane.add(btn_login);
+		
+		JPanel panel_leftline = new JPanel();
+		panel_leftline.setBackground(new Color(51,153,255));
+		panel_leftline.setBounds(0, 112, 2, 221);
+		contentPane.add(panel_leftline);
+		
+		JPanel panel_rightline = new JPanel();
+		panel_rightline.setBackground(new Color(51, 153, 255));
+		panel_rightline.setBounds(428, 112, 2, 221);
+		contentPane.add(panel_rightline);
+		
+		JPanel panel_bottomline = new JPanel();
+		panel_bottomline.setBackground(new Color(51, 153, 255));
+		panel_bottomline.setBounds(0, 331, 431, 2);
+		contentPane.add(panel_bottomline);
 		
 		//最小化事件
 		btn_min.addActionListener(new ActionListener(){
