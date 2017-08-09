@@ -241,7 +241,8 @@ public class LoginPage extends JFrame {
 		
 		//最小化事件
 		btn_min.addActionListener(new ActionListener(){
-	        @Override public void actionPerformed(ActionEvent e){
+	        @Override 
+	        public void actionPerformed(ActionEvent e){
 	        	LoginPage.this.setExtendedState(JFrame.ICONIFIED);
 	        }
 	    });

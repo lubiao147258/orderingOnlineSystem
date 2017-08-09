@@ -105,7 +105,7 @@ public class MainPage extends JFrame {
 		});
 		label.setOpaque(true);
 		label.setBackground(new Color(0, 191, 255));
-		label.setBounds(770, 0, 30, 30);
+		label.setBounds(775, 0, 25, 25);
 		panel.add(label);
 		
 		JLabel label_gerenzhongxin = new JLabel("个人中心");
@@ -205,6 +205,28 @@ public class MainPage extends JFrame {
 		label_wodedingdan.setForeground(new Color(255, 255, 255));
 		label_wodedingdan.setBounds(246, 22, 87, 49);
 		panel.add(label_wodedingdan);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				MainPage.this.setExtendedState(JFrame.ICONIFIED);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_1.setBackground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_1.setBackground(new Color(0,191,252));
+			}
+		});
+		label_1.setIcon(new ImageIcon(MainPage.class.getResource("/image/最小化.png")));
+		label_1.setOpaque(true);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setBackground(new Color(0, 191, 255));
+		label_1.setBounds(750, 0, 25, 25);
+		panel.add(label_1);
 		
 		//点餐页面
 		/*
