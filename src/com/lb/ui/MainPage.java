@@ -12,9 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.SwingConstants;
@@ -47,6 +49,7 @@ public class MainPage extends JFrame {
 	private Point origin = new Point();
 	private JPasswordField passwordField1;
 	private JPasswordField passwordField2;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -498,7 +501,7 @@ public class MainPage extends JFrame {
 		*/
 		
 		//地址管理panel
-		/*
+		
 		panel_dizhiguanli = new JPanel();
 		panel_dizhiguanli.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_dizhiguanli);
@@ -526,7 +529,86 @@ public class MainPage extends JFrame {
 		lb_add.setForeground(Color.GRAY);
 		lb_add.setBounds(146, 16, 81, 15);
 		panel_dizhiguanli.add(lb_add);
-		*/
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setEnabled(false);
+		scrollPane.setBounds(10, 42, 537, 383);
+		panel_dizhiguanli.add(scrollPane);
+		String[] cols = {"序号","用户名","性别","地址信息","电话"};
+		//String[] cols = {"","","","",""};
+		DefaultTableModel mod = new DefaultTableModel(cols, 0);
+		table = new JTable(mod);
+		table.setSurrendersFocusOnKeystroke(true);
+		table.setBorder(new LineBorder(new Color(192, 192, 192)));
+		table.setBackground(new Color(240,240,240));
+		table.setForeground(Color.GRAY);
+		table.setRowHeight(40);
+		table.getTableHeader().setReorderingAllowed(false);//表头不可拖动
+		table.getTableHeader().setResizingAllowed(false);//列大小不可改变
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		table.getColumnModel().getColumn(1).setPreferredWidth(80);
+		table.getColumnModel().getColumn(2).setPreferredWidth(40);
+		table.getColumnModel().getColumn(3).setPreferredWidth(269);
+		table.getColumnModel().getColumn(4).setPreferredWidth(95);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		mod.addRow(new Object[]{"1","jack232","男","经济技术开发区江汉大学北区1栋","15926315478"});
+		scrollPane.setViewportView(table);
+		
+		JLabel lb_del = new JLabel("删除地址");
+		lb_del.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lb_del.setForeground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lb_del.setForeground(Color.GRAY);
+			}
+		});
+		lb_del.setHorizontalAlignment(SwingConstants.CENTER);
+		lb_del.setForeground(Color.GRAY);
+		lb_del.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+		lb_del.setBounds(257, 16, 81, 15);
+		panel_dizhiguanli.add(lb_del);
+		
+		JLabel lb_update = new JLabel("修改地址");
+		lb_update.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lb_update.setForeground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lb_update.setForeground(Color.GRAY);
+			}
+		});
+		lb_update.setHorizontalAlignment(SwingConstants.CENTER);
+		lb_update.setForeground(Color.GRAY);
+		lb_update.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+		lb_update.setBounds(360, 16, 81, 15);
+		panel_dizhiguanli.add(lb_update);
+		
+		JLabel lb_default = new JLabel("选择默认地址");
+		lb_default.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lb_default.setForeground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lb_default.setForeground(Color.GRAY);
+			}
+		});
+		lb_default.setHorizontalAlignment(SwingConstants.CENTER);
+		lb_default.setForeground(Color.GRAY);
+		lb_default.setFont(new Font("微软雅黑", Font.PLAIN, 13));
+		lb_default.setBounds(466, 16, 81, 15);
+		panel_dizhiguanli.add(lb_default);
+		
+		
+		/*
 		JPanel panel_xiugaimima = new JPanel();
 		panel_xiugaimima.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_xiugaimima);
@@ -590,7 +672,7 @@ public class MainPage extends JFrame {
 		label_submit.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		label_submit.setBounds(164, 301, 119, 39);
 		panel_xiugaimima.add(label_submit);
-		
+		*/
 		
 		
 		
