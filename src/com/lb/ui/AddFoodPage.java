@@ -179,6 +179,22 @@ public class AddFoodPage extends JFrame {
 		JLabel label_4 = new JLabel("提 交");
 		label_4.addMouseListener(new MouseAdapter() {
 			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_4.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_4.setBackground(new Color(0,191,255));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_4.setBackground(new Color(7,50,93));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_4.setBackground(new Color(18,150,193));
+			}
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(textField.getText().trim().length()==0){
 					JOptionPane.showMessageDialog(AddFoodPage.this, "请输入添加的类别!","提示",JOptionPane.INFORMATION_MESSAGE);
@@ -340,6 +356,22 @@ public class AddFoodPage extends JFrame {
 		bg.add(fou);
 		JLabel label_6 = new JLabel("提 交");
 		label_6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_6.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_6.setBackground(new Color(0,191,255));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_6.setBackground(new Color(7,50,93));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_6.setBackground(new Color(18,150,193));
+			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(textField_name.getText().trim().length()==0||textFielddanjia.getText().trim().length()==0){

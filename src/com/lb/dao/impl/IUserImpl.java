@@ -87,7 +87,7 @@ public class IUserImpl implements IUser {
 		}	
 		User user = new User(); 
 		try {
-			String sql = "select username,phone,email from [user] where user_Id =?";
+			String sql = "select username,phone,email,password from [user] where user_Id =?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -95,6 +95,7 @@ public class IUserImpl implements IUser {
 				user.setUsername(resultSet.getString(1));
 				user.setPhone(resultSet.getString(2));
 				user.setEmail(resultSet.getString(3));
+				user.setPassword(resultSet.getString(4));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

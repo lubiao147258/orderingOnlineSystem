@@ -1,29 +1,30 @@
 package com.lb.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.lb.service.SellerService;
-
-import java.awt.SystemColor;
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
+import com.lb.service.UserService;
+import com.lb.util.DBManager;
 
 public class SellerInfoPage extends JFrame {
 
 	private JPanel contentPane;
+	private JTextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -152,7 +153,7 @@ public class SellerInfoPage extends JFrame {
 		scrollPane.setBounds(195, 214, 197, 101);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea(SellerService.getSellerInfo().getShopinfo());
+		textArea = new JTextArea(SellerService.getSellerInfo().getShopinfo());
 		textArea.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
@@ -161,7 +162,7 @@ public class SellerInfoPage extends JFrame {
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(SystemColor.textHighlight);
 		label_2.setFont(new Font("楷体", Font.PLAIN, 25));
-		label_2.setBounds(60, 336, 125, 30);
+		label_2.setBounds(60, 325, 125, 30);
 		contentPane.add(label_2);
 		
 		JLabel lblNewLabel_2 = new JLabel(SellerService.getSellerInfo().getShopname());
@@ -173,48 +174,116 @@ public class SellerInfoPage extends JFrame {
 		JLabel label_3 = new JLabel(SellerService.getSellerInfo().getLocation());
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("楷体", Font.PLAIN, 20));
-		label_3.setBounds(195, 336, 197, 42);
+		label_3.setBounds(195, 320, 197, 42);
 		contentPane.add(label_3);
 		
 		JLabel lblNewLabel_3 = new JLabel("[修改]");
+		lblNewLabel_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String inputValue = JOptionPane.showInputDialog("请输入店铺名称："); 
+				if(inputValue==null){
+					JOptionPane.showMessageDialog(SellerInfoPage.this, "输入框为空,修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					if(DBManager.executeUpdate("update [sellerInfo] set shopname = ?", new String[]{inputValue})){
+						//System.out.println("修改成功");
+						lblNewLabel_2.setText(SellerService.getSellerInfo().getShopname());
+					}else{
+						JOptionPane.showMessageDialog(SellerInfoPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						lblNewLabel_2.setText(SellerService.getSellerInfo().getShopname());
+					}
+				}
+				
+			}
+		});
 		lblNewLabel_3.setForeground(new Color(255, 0, 0));
 		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_3.setBounds(452, 134, 54, 25);
+		lblNewLabel_3.setBounds(452, 134, 40, 25);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel label_4 = new JLabel("[修改]");
+		label_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//JOptionPane.showMessageDialog(SellerInfoPage.this, "请在输入信息，点击!","提示",JOptionPane.INFORMATION_MESSAGE);
+				
+					if(DBManager.executeUpdate("update [sellerInfo] set shop_info = ?", new String[]{textArea.getText()})){
+						//System.out.println("修改成功");
+						textArea.setText(SellerService.getSellerInfo().getShopinfo());
+						JOptionPane.showMessageDialog(SellerInfoPage.this, "修改成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						JOptionPane.showMessageDialog(SellerInfoPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						textArea.setText(SellerService.getSellerInfo().getShopinfo());
+					}
+				
+			}
+		});
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label_4.setBounds(452, 214, 54, 25);
+		label_4.setBounds(452, 214, 40, 25);
 		contentPane.add(label_4);
 		
 		JLabel label_5 = new JLabel("[修改]");
+		label_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String inputValue = JOptionPane.showInputDialog("请输入店铺位置："); 
+				if(inputValue==null){
+					JOptionPane.showMessageDialog(SellerInfoPage.this, "输入框为空,修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					if(DBManager.executeUpdate("update [sellerInfo] set location = ?", new String[]{inputValue})){
+						//System.out.println("修改成功");
+						label_3.setText(SellerService.getSellerInfo().getLocation());
+					}else{
+						JOptionPane.showMessageDialog(SellerInfoPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						label_3.setText(SellerService.getSellerInfo().getLocation());
+					}
+				}
+			}
+		});
 		label_5.setHorizontalAlignment(SwingConstants.LEFT);
 		label_5.setForeground(Color.RED);
 		label_5.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label_5.setBounds(452, 342, 54, 25);
+		label_5.setBounds(452, 332, 40, 25);
 		contentPane.add(label_5);
 		
 		JLabel label_6 = new JLabel("电话号码：");
 		label_6.setHorizontalAlignment(SwingConstants.CENTER);
 		label_6.setForeground(SystemColor.textHighlight);
 		label_6.setFont(new Font("楷体", Font.PLAIN, 25));
-		label_6.setBounds(60, 384, 125, 30);
+		label_6.setBounds(60, 374, 125, 30);
 		contentPane.add(label_6);
 		
 		JLabel label_7 = new JLabel(SellerService.getSellerInfo().getPhone());
 		label_7.setHorizontalAlignment(SwingConstants.LEFT);
 		label_7.setFont(new Font("楷体", Font.PLAIN, 20));
-		label_7.setBounds(195, 380, 197, 42);
+		label_7.setBounds(195, 370, 197, 42);
 		contentPane.add(label_7);
 		
 		JLabel label_8 = new JLabel("[修改]");
+		label_8.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String inputValue = JOptionPane.showInputDialog("请输入电话号码："); 
+				if(inputValue==null){
+					JOptionPane.showMessageDialog(SellerInfoPage.this, "输入框为空,修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					if(DBManager.executeUpdate("update [sellerInfo] set phone = ?", new String[]{inputValue})){
+						//System.out.println("修改成功");
+						label_7.setText(SellerService.getSellerInfo().getPhone());
+					}else{
+						JOptionPane.showMessageDialog(SellerInfoPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						label_7.setText(SellerService.getSellerInfo().getPhone());
+					}
+				}
+			}
+		});
 		label_8.setHorizontalAlignment(SwingConstants.LEFT);
 		label_8.setForeground(Color.RED);
 		label_8.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label_8.setBounds(452, 390, 54, 25);
+		label_8.setBounds(452, 380, 40, 25);
 		contentPane.add(label_8);
 	}
 }

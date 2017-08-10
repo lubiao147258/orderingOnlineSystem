@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.lb.service.UserService;
@@ -40,12 +41,10 @@ public class MainPage extends JFrame {
 	public static int selectUserId;
 	
 	private JPanel contentPane;
-	private JPanel panel_buy;
-	private JPanel panel_order;
-	private JPanel panel_cart;
 	private JPanel panel_center;
 	private JPanel panel_gerenziliao;
 	private JPanel panel_dizhiguanli;
+	private JPanel panel_xiugaimima;
 	private Point origin = new Point();
 	private JPasswordField passwordField1;
 	private JPasswordField passwordField2;
@@ -116,10 +115,7 @@ public class MainPage extends JFrame {
 		label_gerenzhongxin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panel_order.setVisible(false);
-				panel_buy.setVisible(false);
-				panel_cart.setVisible(false);
-				panel_center.setVisible(true);
+				//panel_center.setVisible(true);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -140,10 +136,7 @@ public class MainPage extends JFrame {
 		label_kaishidiancan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panel_order.setVisible(false);
-				panel_buy.setVisible(true);
-				panel_cart.setVisible(false);
-				panel_center.setVisible(false);
+				//panel_center.setVisible(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -164,10 +157,7 @@ public class MainPage extends JFrame {
 		label_gouwuche.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panel_order.setVisible(false);
-				panel_buy.setVisible(false);
-				panel_cart.setVisible(true);
-				panel_center.setVisible(false);
+				//panel_center.setVisible(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -188,10 +178,6 @@ public class MainPage extends JFrame {
 		label_wodedingdan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panel_order.setVisible(true);
-				panel_buy.setVisible(false);
-				panel_cart.setVisible(false);
-				panel_center.setVisible(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -227,40 +213,7 @@ public class MainPage extends JFrame {
 		label_1.setBackground(new Color(0, 191, 255));
 		label_1.setBounds(750, 0, 25, 25);
 		panel.add(label_1);
-		
-		//点餐页面
-		/*
-		panel_buy = new JPanel();
-		panel_buy.setBounds(24, 108, 753, 463);
-		contentPane.add(panel_buy);
-		panel_buy.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("点餐页面");
-		lblNewLabel.setBounds(352, 144, 54, 15);
-		panel_buy.add(lblNewLabel);
-		panel_buy.setVisible(true);
-		
-		
-		//订单页面
-		panel_order = new JPanel();
-		panel_order.setBounds(24, 108, 753, 463);
-		contentPane.add(panel_order);
-		panel_order.setLayout(null);
-		panel_order.setVisible(false);
-		
-		JLabel lb = new JLabel("订单页面");
-		lb.setBounds(373, 5, 54, 15);
-		panel_order.add(lb);
-		
-		
-		//购物车页面
-		panel_cart = new JPanel();
-		panel_cart.setBounds(24, 108, 753, 463);
-		contentPane.add(panel_cart);
-		panel_cart.setVisible(false);
-		
-		JLabel lblNewLabel_1 = new JLabel("购物车页面");
-		panel_cart.add(lblNewLabel_1);*/
+			
 		
 		//个人中心页面
 		panel_center = new JPanel();
@@ -281,47 +234,17 @@ public class MainPage extends JFrame {
 		pic1.setBounds(10, 25, 30, 30);
 		panel_center.add(pic1);
 		
-		JLabel pic2 = new JLabel("");
-		pic2.setIcon(new ImageIcon(MainPage.class.getResource("/image/订单.png")));
-		pic2.setHorizontalAlignment(SwingConstants.CENTER);
-		pic2.setBounds(10, 100, 30, 30);
-		panel_center.add(pic2);
-		
-		JLabel lab_dingdan = new JLabel("我的订单");
-		lab_dingdan.setHorizontalAlignment(SwingConstants.CENTER);
-		lab_dingdan.setForeground(new Color(0, 0, 0));
-		lab_dingdan.setFont(new Font("微软雅黑", Font.BOLD, 16));
-		lab_dingdan.setBounds(50, 100, 88, 30);
-		panel_center.add(lab_dingdan);
-		
-		JLabel lab_xiangqing = new JLabel("订单详情");
-		lab_xiangqing.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lab_xiangqing.setForeground(new Color(255,0,0));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lab_xiangqing.setForeground(new Color(128,128,128));
-			}
-		});
-		lab_xiangqing.setHorizontalAlignment(SwingConstants.CENTER);
-		lab_xiangqing.setForeground(new Color(128, 128, 128));
-		lab_xiangqing.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		lab_xiangqing.setBounds(50, 140, 88, 30);
-		panel_center.add(lab_xiangqing);
-		
 		JLabel lab_wodezhiliao = new JLabel("我的资料");
 		lab_wodezhiliao.setHorizontalAlignment(SwingConstants.CENTER);
 		lab_wodezhiliao.setForeground(Color.BLACK);
 		lab_wodezhiliao.setFont(new Font("微软雅黑", Font.BOLD, 16));
-		lab_wodezhiliao.setBounds(50, 199, 88, 30);
+		lab_wodezhiliao.setBounds(50, 96, 88, 30);
 		panel_center.add(lab_wodezhiliao);
 		
 		JLabel pic3 = new JLabel("");
 		pic3.setIcon(new ImageIcon(MainPage.class.getResource("/image/个人.png")));
 		pic3.setHorizontalAlignment(SwingConstants.CENTER);
-		pic3.setBounds(10, 199, 30, 30);
+		pic3.setBounds(10, 96, 30, 30);
 		panel_center.add(pic3);
 		
 		JLabel label_gerenziliao = new JLabel("个人资料");
@@ -338,12 +261,13 @@ public class MainPage extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panel_gerenziliao.setVisible(true);
 				panel_dizhiguanli.setVisible(false);
+				panel_xiugaimima.setVisible(false);
 			}
 		});
 		label_gerenziliao.setHorizontalAlignment(SwingConstants.CENTER);
 		label_gerenziliao.setForeground(Color.GRAY);
 		label_gerenziliao.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		label_gerenziliao.setBounds(50, 239, 88, 30);
+		label_gerenziliao.setBounds(50, 136, 88, 30);
 		panel_center.add(label_gerenziliao);
 		
 		JLabel lab_dizhiguanli = new JLabel("地址管理");
@@ -360,12 +284,13 @@ public class MainPage extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				panel_gerenziliao.setVisible(false);
 				panel_dizhiguanli.setVisible(true);
+				panel_xiugaimima.setVisible(false);
 			}
 		});
 		lab_dizhiguanli.setHorizontalAlignment(SwingConstants.CENTER);
 		lab_dizhiguanli.setForeground(Color.GRAY);
 		lab_dizhiguanli.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		lab_dizhiguanli.setBounds(50, 279, 88, 30);
+		lab_dizhiguanli.setBounds(50, 176, 88, 30);
 		panel_center.add(lab_dizhiguanli);
 		
 		JLabel lab_xiugaimima = new JLabel("修改密码");
@@ -378,11 +303,17 @@ public class MainPage extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				lab_xiugaimima.setForeground(new Color(128,128,128));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_gerenziliao.setVisible(false);
+				panel_dizhiguanli.setVisible(false);
+				panel_xiugaimima.setVisible(true);
+			}
 		});
 		lab_xiugaimima.setHorizontalAlignment(SwingConstants.CENTER);
 		lab_xiugaimima.setForeground(Color.GRAY);
 		lab_xiugaimima.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		lab_xiugaimima.setBounds(50, 324, 88, 30);
+		lab_xiugaimima.setBounds(50, 221, 88, 30);
 		panel_center.add(lab_xiugaimima);
 		
 		JLabel lab_line = new JLabel("");
@@ -392,7 +323,7 @@ public class MainPage extends JFrame {
 		lab_line.setOpaque(true);
 		
 		//个人资料panel
-		/*
+		
 		panel_gerenziliao = new JPanel();
 		panel_gerenziliao.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_gerenziliao);
@@ -465,10 +396,15 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String inputValue = JOptionPane.showInputDialog("请输入用户名："); 
-				if(DBManager.executeUpdate("update [user] set username = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
-					System.out.println("修改成功");
-					label_username2.setText(UserService.getUserInfoService(selectUserId).getUsername());
+				if(inputValue!=null){
+					if(DBManager.executeUpdate("update [user] set username = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
+						System.out.println("修改成功");
+						label_username2.setText(UserService.getUserInfoService(selectUserId).getUsername());
+					}
+				}else{
+					JOptionPane.showMessageDialog(MainPage.this, "不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
 		});
 		label_username3.setForeground(new Color(30, 144, 255));
@@ -481,10 +417,15 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String inputValue = JOptionPane.showInputDialog("请输入手机号："); 
-				if(DBManager.executeUpdate("update [user] set phone = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
-					System.out.println("修改成功");
-					label_shoujihaoma2.setText(UserService.getUserInfoService(selectUserId).getPhone());
+				if(inputValue!=null){
+					if(DBManager.executeUpdate("update [user] set phone = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
+						System.out.println("修改成功");
+						label_shoujihaoma2.setText(UserService.getUserInfoService(selectUserId).getPhone());
+					}
+				}else{
+					JOptionPane.showMessageDialog(MainPage.this, "不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
 		});
 		label_shoujihaoma3.setForeground(new Color(30, 144, 255));
@@ -501,14 +442,19 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String inputValue = JOptionPane.showInputDialog("请输入邮箱："); 
-				if(!CheckEmail.emailCheck(inputValue)){
-					JOptionPane.showMessageDialog(MainPage.this, "邮箱格式不正确!","提示",JOptionPane.INFORMATION_MESSAGE);
-				}else{
-					if(DBManager.executeUpdate("update [user] set email = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
-						System.out.println("修改成功");
-						label_wodeyouxiang2.setText(UserService.getUserInfoService(selectUserId).getEmail());
+				if(inputValue!=null){
+					if(!CheckEmail.emailCheck(inputValue)){
+						JOptionPane.showMessageDialog(MainPage.this, "邮箱格式不正确!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						if(DBManager.executeUpdate("update [user] set email = ? where user_Id = ?", new String[]{inputValue,String.valueOf(selectUserId)})){
+							System.out.println("修改成功");
+							label_wodeyouxiang2.setText(UserService.getUserInfoService(selectUserId).getEmail());
+						}
 					}
+				}else{
+					JOptionPane.showMessageDialog(MainPage.this, "不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
 				}
+				
 			}
 		});
 		label_wodeyouxiang3.setForeground(new Color(30, 144, 255));
@@ -520,7 +466,7 @@ public class MainPage extends JFrame {
 		label_wodeyouxiang3.setBounds(315, 319, 81, 15);
 		panel_gerenziliao.add(label_wodeyouxiang3);
 		
-		*/
+		
 		
 		//地址管理panel
 		
@@ -528,6 +474,7 @@ public class MainPage extends JFrame {
 		panel_dizhiguanli.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_dizhiguanli);
 		panel_dizhiguanli.setLayout(null);
+		panel_dizhiguanli.setVisible(false);
 		
 		JLabel label_dizhiguanli = new JLabel("地址管理");
 		label_dizhiguanli.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -560,6 +507,8 @@ public class MainPage extends JFrame {
 		String[] cols = {"序号","用户名","性别","地址信息","电话"};
 		//String[] cols = {"","","","",""};
 		DefaultTableModel mod = new DefaultTableModel(cols, 0);
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
+		tcr.setHorizontalAlignment(JLabel.CENTER);
 		table = new JTable(mod);
 		table.setSurrendersFocusOnKeystroke(true);
 		table.setBorder(new LineBorder(new Color(192, 192, 192)));
@@ -574,7 +523,8 @@ public class MainPage extends JFrame {
 		table.getColumnModel().getColumn(3).setPreferredWidth(269);
 		table.getColumnModel().getColumn(4).setPreferredWidth(95);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+		table.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		table.setDefaultRenderer(Object.class, tcr);
 		mod.addRow(new Object[]{"1","jack232","男","经济技术开发区江汉大学北区1栋","15926315478"});
 		scrollPane.setViewportView(table);
 		
@@ -630,11 +580,12 @@ public class MainPage extends JFrame {
 		panel_dizhiguanli.add(lb_default);
 		
 		
-		/*
-		JPanel panel_xiugaimima = new JPanel();
+		
+		panel_xiugaimima = new JPanel();
 		panel_xiugaimima.setBounds(186, 10, 557, 435);
 		panel_center.add(panel_xiugaimima);
 		panel_xiugaimima.setLayout(null);
+		panel_xiugaimima.setVisible(false);
 		
 		JLabel label_xiugaimima = new JLabel("修改密码");
 		label_xiugaimima.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -686,6 +637,25 @@ public class MainPage extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				label_submit.setBackground(new Color(18,150,193));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if((new String(passwordField1.getPassword())).trim().length()==0||(new String(passwordField2.getPassword())).trim().length()==0){
+					JOptionPane.showMessageDialog(MainPage.this, "不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
+					System.out.println(UserService.getUserInfoService(selectUserId).getPassword());
+				}else{
+					if((new String(UserService.getUserInfoService(selectUserId).getPassword())).equals(new String(passwordField1.getPassword()))){
+						if(DBManager.executeUpdate("update [user] set password=? where user_Id=?", new String[]{(new String(passwordField2.getPassword())),String.valueOf(selectUserId)})){
+							JOptionPane.showMessageDialog(MainPage.this, "修改成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+							passwordField1.setText("");
+							passwordField2.setText("");
+						}else{
+							JOptionPane.showMessageDialog(MainPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+							passwordField1.setText("");
+							passwordField2.setText("");
+						}
+					}
+				}
+			}
 		});
 		label_submit.setOpaque(true);
 		label_submit.setBackground(new Color(0, 191, 255));
@@ -694,7 +664,7 @@ public class MainPage extends JFrame {
 		label_submit.setFont(new Font("微软雅黑", Font.BOLD, 20));
 		label_submit.setBounds(164, 301, 119, 39);
 		panel_xiugaimima.add(label_submit);
-		*/
+		
 		
 		
 		

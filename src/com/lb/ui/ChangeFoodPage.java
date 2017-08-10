@@ -52,7 +52,7 @@ public class ChangeFoodPage extends JFrame {
 	 * Create the frame.
 	 */
 	public ChangeFoodPage() {
-		System.out.println("Change页面的值："+selectid);
+		//System.out.println("Change页面的值："+selectid);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 608, 432);
 		contentPane = new JPanel();
@@ -176,7 +176,7 @@ public class ChangeFoodPage extends JFrame {
 		comboBox.setFont(new Font("楷体", Font.PLAIN, 18));
 		comboBox.setBounds(106, 25, 176, 35);
 		panel_1.add(comboBox);
-		System.out.println("Change页面的值："+selectid);
+		//System.out.println("Change页面的值："+selectid);
 		textField = new JTextField(SellerService.getFoodInfoById(selectid).getFoodName());
 		textField.setFont(new Font("楷体", Font.PLAIN, 18));
 		textField.setColumns(10);
@@ -196,7 +196,7 @@ public class ChangeFoodPage extends JFrame {
 		radioButton.setBounds(115, 179, 61, 23);
 		panel_1.add(radioButton);
 		
-		System.out.println("状态："+SellerService.getFoodInfoById(selectid).getIsOnsale());
+		//System.out.println("状态："+SellerService.getFoodInfoById(selectid).getIsOnsale());
 		JRadioButton radioButton_1 = new JRadioButton("已下架");
 		radioButton_1.setFont(new Font("楷体", Font.PLAIN, 18));
 		radioButton_1.setBounds(201, 179, 91, 23);
@@ -213,6 +213,22 @@ public class ChangeFoodPage extends JFrame {
 		bg.add(radioButton);
 		JLabel label_4 = new JLabel("提 交");
 		label_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_4.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_4.setBackground(new Color(0,191,255));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_4.setBackground(new Color(7,50,93));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_4.setBackground(new Color(18,150,193));
+			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(textField.getText().trim().length()==0||textField_1.getText().trim().length()==0){//comboBox\textField\textField_1

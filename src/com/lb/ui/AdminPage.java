@@ -276,7 +276,7 @@ public class AdminPage extends JFrame {
 				if(row>=0){
 					ChangeFoodPage.selectid=Integer.parseInt(mod.getValueAt(row,0).toString());
 					new ChangeFoodPage().setVisible(true);
-					System.out.println("Admin页面的值："+ChangeFoodPage.selectid);
+					//System.out.println("Admin页面的值："+ChangeFoodPage.selectid);
 				}else{
 					JOptionPane.showMessageDialog(AdminPage.this, "请选择一行进行修改!","提示",JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -342,7 +342,7 @@ public class AdminPage extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
+				new SellerOrderManager().setVisible(true);
 			}
 		});
 		label_3.setOpaque(true);

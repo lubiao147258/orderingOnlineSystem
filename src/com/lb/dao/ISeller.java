@@ -30,4 +30,6 @@ public interface ISeller {
 	Integer getFoodTypeIdByName(String name);//根据类别名称获得id
 	
 	SellerInfo getSellerInfo();//获取商家信息
+	
+	List<Food> getFoodsBySize(int pageNum,int pageSize);
 }

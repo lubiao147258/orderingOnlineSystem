@@ -28,9 +28,9 @@ public class UserService {
 		
 	//测试
 	public static void main(String[] args) {
-		User u = new User("lubiao","147258");
-		IUser user =new IUserImpl();
+//		User u = new User("lubiao","147258");
+//		IUser user =new IUserImpl();
 		
-		System.out.println(loginService(u));
+		System.out.println(UserService.getUserInfoService(1).getPassword());
 	}
 }

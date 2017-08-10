@@ -188,7 +188,7 @@ public class LoginPage extends JFrame {
 						//JOptionPane.showMessageDialog(LoginPage.this, "正在登陆。。。。!","提示",JOptionPane.INFORMATION_MESSAGE);
 						MainPage.selectUserId=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						LoginPage.this.dispose();
-						new MainPage().setVisible(true);
+						new StartOrderPage().setVisible(true);
 					}else{
 						JOptionPane.showMessageDialog(LoginPage.this, "账号或密码不正确，请检查后再登录!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}

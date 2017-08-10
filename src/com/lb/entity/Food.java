@@ -75,6 +75,7 @@ public class Food {
 		this.type_id = type_id;
 		this.isOnsale = isOnsale;
 	}
+
 	
 	
 

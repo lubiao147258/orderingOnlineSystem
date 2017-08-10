@@ -64,6 +64,10 @@ public class SellerService {
 		return seller.getSellerInfo();
 	}
 	
+	public static  List<Food> getFoodsBySize(int pageNum, int pageSize){
+		return seller.getFoodsBySize(pageNum, pageSize);
+	}
+	
 	//测试
 	public static void main(String[] args) {
 		//System.out.println(SellerService.addFoodService(new Food(1,"炒饭",20.0,1)));
