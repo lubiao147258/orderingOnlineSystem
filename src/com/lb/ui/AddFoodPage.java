@@ -1,32 +1,36 @@
 package com.lb.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.border.LineBorder;
-import javax.swing.JRadioButton;
+
+import com.lb.entity.Food;
+import com.lb.entity.FoodType;
+import com.lb.service.SellerService;
 
 public class AddFoodPage extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panel_leibie;
+	private JPanel panel_caipin;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textField_name;
+	private JTextField textFielddanjia;
 
 	/**
 	 * Launch the application.
@@ -131,12 +135,13 @@ public class AddFoodPage extends JFrame {
 		panel_bottomline.setBounds(0, 430, 608, 2);
 		contentPane.add(panel_bottomline);
 		
+		//添加菜
 		
-		/*
 		panel_leibie = new JPanel();
 		panel_leibie.setBounds(166, 90, 432, 332);
 		contentPane.add(panel_leibie);
 		panel_leibie.setLayout(null);
+		panel_leibie.setVisible(false);
 		
 		JLabel label_2 = new JLabel("输入菜类别名称：");
 		label_2.setBounds(10, 49, 149, 30);
@@ -160,13 +165,45 @@ public class AddFoodPage extends JFrame {
 		panel_leibie.add(label_3);
 		
 		JComboBox comboBox = new JComboBox();
+		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"1"}));
+		for (FoodType foodtype : SellerService.getFoodTyleService()) {
+			comboBox.addItem(foodtype.getTypeName());
+		}
+		//comboBox.addItem("武汉");
+
 		comboBox.setForeground(new Color(51, 51, 51));
 		comboBox.setFont(new Font("楷体", Font.PLAIN, 16));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6"}));
 		comboBox.setBounds(166, 117, 182, 39);
 		panel_leibie.add(comboBox);
 		
 		JLabel label_4 = new JLabel("提 交");
+		label_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(textField.getText().trim().length()==0){
+					JOptionPane.showMessageDialog(AddFoodPage.this, "请输入添加的类别!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					if(SellerService.checkFoodTypeNameIsExistsService(textField.getText())==0){
+						if(SellerService.addFoodTypeService(textField.getText())){
+							JOptionPane.showMessageDialog(AddFoodPage.this, "添加成功!","提示",JOptionPane.INFORMATION_MESSAGE);			
+								comboBox.removeAllItems();					
+							for (FoodType foodtype : SellerService.getFoodTyleService()) {
+								comboBox.addItem(foodtype.getTypeName());
+							}
+							textField.setText("");						
+							
+						}else{
+							JOptionPane.showMessageDialog(AddFoodPage.this, "添加失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+							textField.setText("");
+						}
+					}else{
+						JOptionPane.showMessageDialog(AddFoodPage.this, "已存在该类商品，请勿重复添加!","提示",JOptionPane.INFORMATION_MESSAGE);
+						textField.setText("");
+					}
+				}
+				
+			}
+		});
 		label_4.setOpaque(true);
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
 		label_4.setForeground(Color.WHITE);
@@ -174,11 +211,26 @@ public class AddFoodPage extends JFrame {
 		label_4.setBackground(new Color(0, 191, 255));
 		label_4.setBounds(60, 212, 99, 38);
 		panel_leibie.add(label_4);
-		*/
+		
 		
 		
 		JLabel label = new JLabel("添加类别");
-		label.setBounds(25, 137, 99, 38);
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_caipin.setVisible(false);
+				panel_leibie.setVisible(true);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label.setForeground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label.setForeground(new Color(0, 0, 128));
+			}
+		});
+		label.setBounds(25, 288, 99, 38);
 		contentPane.add(label);
 		label.setOpaque(true);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -187,7 +239,22 @@ public class AddFoodPage extends JFrame {
 		label.setBackground(new Color(240, 240, 240));
 		
 		JLabel label_1 = new JLabel("添加菜品");
-		label_1.setBounds(25, 307, 99, 38);
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				panel_caipin.setVisible(true);
+				panel_leibie.setVisible(false);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_1.setForeground(new Color(255,0,0));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_1.setForeground(new Color(0, 0, 128));
+			}
+		});
+		label_1.setBounds(25, 136, 99, 38);
 		contentPane.add(label_1);
 		label_1.setOpaque(true);
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -195,10 +262,17 @@ public class AddFoodPage extends JFrame {
 		label_1.setFont(new Font("楷体", Font.BOLD, 20));
 		label_1.setBackground(new Color(240, 240, 240));
 		
-		JPanel panel_caipin = new JPanel();
+		
+		
+		panel_caipin = new JPanel();
 		panel_caipin.setBounds(166, 90, 432, 332);
 		contentPane.add(panel_caipin);
 		panel_caipin.setLayout(null);
+		
+		
+		
+		
+		//****************************
 		
 		JLabel label_5 = new JLabel("菜类别：");
 		label_5.setBounds(10, 26, 149, 30);
@@ -207,55 +281,102 @@ public class AddFoodPage extends JFrame {
 		label_5.setForeground(new Color(153, 102, 102));
 		label_5.setFont(new Font("楷体", Font.PLAIN, 16));
 		
-		JLabel label_2 = new JLabel("菜名称：");
-		label_2.setHorizontalAlignment(SwingConstants.LEFT);
-		label_2.setForeground(new Color(153, 102, 102));
-		label_2.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_2.setBounds(10, 76, 149, 30);
-		panel_caipin.add(label_2);
+		JLabel label_caiing = new JLabel("菜名称：");
+		label_caiing.setHorizontalAlignment(SwingConstants.LEFT);
+		label_caiing.setForeground(new Color(153, 102, 102));
+		label_caiing.setFont(new Font("楷体", Font.PLAIN, 16));
+		label_caiing.setBounds(10, 76, 149, 30);
+		panel_caipin.add(label_caiing);
 		
-		JLabel label_3 = new JLabel("单价：");
-		label_3.setHorizontalAlignment(SwingConstants.LEFT);
-		label_3.setForeground(new Color(153, 102, 102));
-		label_3.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_3.setBounds(10, 127, 149, 30);
-		panel_caipin.add(label_3);
+		JLabel label_33 = new JLabel("单价：");
+		label_33.setHorizontalAlignment(SwingConstants.LEFT);
+		label_33.setForeground(new Color(153, 102, 102));
+		label_33.setFont(new Font("楷体", Font.PLAIN, 16));
+		label_33.setBounds(10, 127, 149, 30);
+		panel_caipin.add(label_33);
 		
-		JLabel label_4 = new JLabel("是否立即上架：");
-		label_4.setHorizontalAlignment(SwingConstants.LEFT);
-		label_4.setForeground(new Color(153, 102, 102));
-		label_4.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_4.setBounds(10, 176, 112, 30);
-		panel_caipin.add(label_4);
+		JLabel label_44 = new JLabel("是否立即上架：");
+		label_44.setHorizontalAlignment(SwingConstants.LEFT);
+		label_44.setForeground(new Color(153, 102, 102));
+		label_44.setFont(new Font("楷体", Font.PLAIN, 16));
+		label_44.setBounds(10, 176, 112, 30);
+		panel_caipin.add(label_44);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("楷体", Font.PLAIN, 18));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "6", "5", "4"}));
-		comboBox.setBounds(106, 25, 176, 35);
-		panel_caipin.add(comboBox);
+		JComboBox comboBox1 = new JComboBox();
+		comboBox1.setFont(new Font("楷体", Font.PLAIN, 18));
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(106, 75, 177, 35);
-		panel_caipin.add(textField_1);
-		textField_1.setColumns(10);
+		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "6", "5", "4"}));
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(106, 122, 177, 35);
-		panel_caipin.add(textField_2);
+		for (FoodType foodtype : SellerService.getFoodTyleService()) {
+			comboBox1.addItem(foodtype.getTypeName());
+		}
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("是");
-		rdbtnNewRadioButton.setFont(new Font("楷体", Font.PLAIN, 18));
-		rdbtnNewRadioButton.setSelected(true);
-		rdbtnNewRadioButton.setBounds(133, 181, 48, 23);
-		panel_caipin.add(rdbtnNewRadioButton);
+		comboBox1.setBounds(106, 25, 176, 35);
+		panel_caipin.add(comboBox1);
 		
-		JRadioButton radioButton = new JRadioButton("否");
-		radioButton.setFont(new Font("楷体", Font.PLAIN, 18));
-		radioButton.setBounds(214, 181, 48, 23);
-		panel_caipin.add(radioButton);
+		textField_name = new JTextField();
+		textField_name.setBounds(106, 75, 177, 35);
+		panel_caipin.add(textField_name);
+		textField_name.setColumns(10);
 		
+		textFielddanjia = new JTextField();
+		textFielddanjia.setColumns(10);
+		textFielddanjia.setBounds(106, 122, 177, 35);
+		panel_caipin.add(textFielddanjia);
+		
+		JRadioButton shi = new JRadioButton("是");
+		shi.setFont(new Font("楷体", Font.PLAIN, 18));
+		shi.setSelected(true);
+		shi.setBounds(133, 181, 48, 23);
+		panel_caipin.add(shi);
+		
+		JRadioButton fou = new JRadioButton("否");
+		fou.setFont(new Font("楷体", Font.PLAIN, 18));
+		fou.setBounds(214, 181, 48, 23);
+		panel_caipin.add(fou);
+		
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(shi);
+		bg.add(fou);
 		JLabel label_6 = new JLabel("提 交");
+		label_6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(textField_name.getText().trim().length()==0||textFielddanjia.getText().trim().length()==0){
+					//comboBox1
+					//textField_name
+					//textFielddanjia
+					//shi/fou
+					JOptionPane.showMessageDialog(AddFoodPage.this, "输入框不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
+					textField_name.setText("");
+					textFielddanjia.setText("");
+				}
+				else{					
+					int typeid =SellerService.getFoodTypeIdByName((comboBox1.getSelectedItem().toString().trim()));
+					int isOnsale;
+					if(shi.isSelected()){
+						isOnsale=1;
+					}else{
+						isOnsale=0;						
+					}
+					if(SellerService.checkFoodNameIsExistsService(textField_name.getText().trim())>=1){
+						JOptionPane.showMessageDialog(AddFoodPage.this, "已存在给商品,请勿重复添加!","提示",JOptionPane.INFORMATION_MESSAGE);
+						textField_name.setText("");
+						textFielddanjia.setText("");
+					}else{
+						if(SellerService.addFoodService(new Food(typeid,textField_name.getText().trim(),Double.parseDouble(textFielddanjia.getText().trim()),isOnsale))){
+							JOptionPane.showMessageDialog(AddFoodPage.this, "添加成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+							textField_name.setText("");
+							textFielddanjia.setText("");
+						}else{
+							JOptionPane.showMessageDialog(AddFoodPage.this, "添加失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+							textField_name.setText("");
+							textFielddanjia.setText("");
+						}
+					}
+				}
+			}
+		});
 		label_6.setOpaque(true);
 		label_6.setHorizontalAlignment(SwingConstants.CENTER);
 		label_6.setForeground(Color.WHITE);
@@ -263,5 +384,6 @@ public class AddFoodPage extends JFrame {
 		label_6.setBackground(new Color(0, 191, 255));
 		label_6.setBounds(45, 238, 99, 38);
 		panel_caipin.add(label_6);
+		
 	}
 }

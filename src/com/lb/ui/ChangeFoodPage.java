@@ -10,16 +10,24 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import com.lb.entity.FoodType;
+import com.lb.service.SellerService;
+import com.lb.util.DBManager;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 
 public class ChangeFoodPage extends JFrame {
 
+	public static int selectid;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -44,6 +52,7 @@ public class ChangeFoodPage extends JFrame {
 	 * Create the frame.
 	 */
 	public ChangeFoodPage() {
+		System.out.println("Change页面的值："+selectid);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 608, 432);
 		contentPane = new JPanel();
@@ -134,60 +143,99 @@ public class ChangeFoodPage extends JFrame {
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setForeground(new Color(153, 102, 102));
 		label.setFont(new Font("楷体", Font.PLAIN, 16));
-		label.setBounds(10, 26, 149, 30);
+		label.setBounds(10, 26, 78, 30);
 		panel_1.add(label);
 		
 		JLabel label_1 = new JLabel("菜名称：");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setForeground(new Color(153, 102, 102));
 		label_1.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_1.setBounds(10, 76, 149, 30);
+		label_1.setBounds(10, 76, 91, 30);
 		panel_1.add(label_1);
 		
 		JLabel label_2 = new JLabel("单价：");
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setForeground(new Color(153, 102, 102));
 		label_2.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_2.setBounds(10, 127, 149, 30);
+		label_2.setBounds(10, 127, 86, 30);
 		panel_1.add(label_2);
 		
-		JLabel label_3 = new JLabel("是否立即上架：");
+		JLabel label_3 = new JLabel("状态：");
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setForeground(new Color(153, 102, 102));
 		label_3.setFont(new Font("楷体", Font.PLAIN, 16));
-		label_3.setBounds(10, 176, 112, 30);
+		label_3.setBounds(10, 176, 99, 30);
 		panel_1.add(label_3);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "4", "7", "8", "9", "6", "5", "2", "3"}));
+		
+		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "4", "7", "8", "9", "6", "5", "2", "3"}));
+		for (FoodType foodtype : SellerService.getFoodTyleService()) {
+			comboBox.addItem(foodtype.getTypeName());
+		}
 		comboBox.setFont(new Font("楷体", Font.PLAIN, 18));
 		comboBox.setBounds(106, 25, 176, 35);
 		panel_1.add(comboBox);
-		
-		textField = new JTextField();
+		System.out.println("Change页面的值："+selectid);
+		textField = new JTextField(SellerService.getFoodInfoById(selectid).getFoodName());
 		textField.setFont(new Font("楷体", Font.PLAIN, 18));
 		textField.setColumns(10);
 		textField.setBounds(106, 75, 177, 35);
 		panel_1.add(textField);
 		
-		textField_1 = new JTextField();
+		textField_1 = new JTextField(String.valueOf(SellerService.getFoodInfoById(selectid).getPrice()));
 		textField_1.setFont(new Font("楷体", Font.PLAIN, 18));
 		textField_1.setColumns(10);
 		textField_1.setBounds(106, 122, 177, 35);
 		panel_1.add(textField_1);
 		
-		JRadioButton radioButton = new JRadioButton("是");
-		radioButton.setSelected(true);
+		JRadioButton radioButton = new JRadioButton("在售");
+		//radioButton.setSelected(true);
+		
 		radioButton.setFont(new Font("楷体", Font.PLAIN, 18));
-		radioButton.setBounds(133, 181, 48, 23);
+		radioButton.setBounds(115, 179, 61, 23);
 		panel_1.add(radioButton);
 		
-		JRadioButton radioButton_1 = new JRadioButton("否");
+		System.out.println("状态："+SellerService.getFoodInfoById(selectid).getIsOnsale());
+		JRadioButton radioButton_1 = new JRadioButton("已下架");
 		radioButton_1.setFont(new Font("楷体", Font.PLAIN, 18));
-		radioButton_1.setBounds(214, 181, 48, 23);
+		radioButton_1.setBounds(201, 179, 91, 23);
 		panel_1.add(radioButton_1);
-		
+		if(SellerService.getFoodInfoById(selectid).getIsOnsale()==1){
+			radioButton.setSelected(true);
+			radioButton_1.setSelected(false);
+		}else{
+			radioButton.setSelected(false);
+			radioButton_1.setSelected(true);
+		}
+		ButtonGroup  bg = new ButtonGroup();
+		bg.add(radioButton_1);
+		bg.add(radioButton);
 		JLabel label_4 = new JLabel("提 交");
+		label_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(textField.getText().trim().length()==0||textField_1.getText().trim().length()==0){//comboBox\textField\textField_1
+					JOptionPane.showMessageDialog(ChangeFoodPage.this, "修改失败，不允许输入框为空!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}else{
+					String com = (String) comboBox.getSelectedItem();
+					int onsale;
+					if(radioButton.isSelected()){
+						onsale=1;
+					}else{
+						onsale=0;
+					}
+					String[] objs = new String[]{textField.getText().trim(),textField_1.getText().trim(),String.valueOf(SellerService.getFoodTypeIdByName(com)),String.valueOf(onsale),String.valueOf(selectid)};
+					if(DBManager.executeUpdate("update food set food_name=?,food_price=?,type_id=?,onsale=? where food_Id=?", objs)){
+						JOptionPane.showMessageDialog(ChangeFoodPage.this, "修改成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+						new AdminPage().setVisible(true);
+					}else{
+						JOptionPane.showMessageDialog(ChangeFoodPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				
+			}
+		});
 		label_4.setOpaque(true);
 		label_4.setHorizontalAlignment(SwingConstants.CENTER);
 		label_4.setForeground(Color.WHITE);

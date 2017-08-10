@@ -24,9 +24,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.lb.dao.IUser;
-import com.lb.dao.impl.IUserImpl;
+import com.lb.entity.Seller;
 import com.lb.entity.User;
+import com.lb.service.SellerService;
 import com.lb.service.UserService;
 
 
@@ -189,10 +189,18 @@ public class LoginPage extends JFrame {
 						MainPage.selectUserId=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						LoginPage.this.dispose();
 						new MainPage().setVisible(true);
-						
+					}else{
+						JOptionPane.showMessageDialog(LoginPage.this, "账号或密码不正确，请检查后再登录!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}
 				}else{
-					System.out.println("你不是管理员！！");
+					Seller s = new Seller(username.getText(),new String(passwordField.getPassword()));
+					if(SellerService.loginService(s)>=1){
+						LoginPage.this.dispose();
+						new AdminPage().setVisible(true);
+					}
+					else{
+						JOptionPane.showMessageDialog(LoginPage.this, "账号或密码不正确，请检查后再登录!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				
 				

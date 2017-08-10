@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import com.lb.service.SellerService;
+
 import java.awt.SystemColor;
 import javax.swing.JTextArea;
 import javax.swing.JScrollBar;
@@ -135,7 +138,7 @@ public class SellerInfoPage extends JFrame {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setForeground(SystemColor.textHighlight);
 		label.setFont(new Font("楷体", Font.PLAIN, 25));
-		label.setBounds(60, 160, 125, 30);
+		label.setBounds(60, 134, 125, 30);
 		contentPane.add(label);
 		
 		JLabel label_1 = new JLabel("店铺简介：");
@@ -149,7 +152,7 @@ public class SellerInfoPage extends JFrame {
 		scrollPane.setBounds(195, 214, 197, 101);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+		JTextArea textArea = new JTextArea(SellerService.getSellerInfo().getShopinfo());
 		textArea.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
@@ -158,16 +161,16 @@ public class SellerInfoPage extends JFrame {
 		label_2.setHorizontalAlignment(SwingConstants.CENTER);
 		label_2.setForeground(SystemColor.textHighlight);
 		label_2.setFont(new Font("楷体", Font.PLAIN, 25));
-		label_2.setBounds(60, 340, 125, 30);
+		label_2.setBounds(60, 336, 125, 30);
 		contentPane.add(label_2);
 		
-		JLabel lblNewLabel_2 = new JLabel("娃哈哈");
+		JLabel lblNewLabel_2 = new JLabel(SellerService.getSellerInfo().getShopname());
 		lblNewLabel_2.setFont(new Font("楷体", Font.PLAIN, 20));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_2.setBounds(196, 155, 197, 42);
+		lblNewLabel_2.setBounds(195, 130, 197, 42);
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel label_3 = new JLabel("娃哈哈");
+		JLabel label_3 = new JLabel(SellerService.getSellerInfo().getLocation());
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("楷体", Font.PLAIN, 20));
 		label_3.setBounds(195, 336, 197, 42);
@@ -177,7 +180,7 @@ public class SellerInfoPage extends JFrame {
 		lblNewLabel_3.setForeground(new Color(255, 0, 0));
 		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_3.setBounds(452, 160, 54, 25);
+		lblNewLabel_3.setBounds(452, 134, 54, 25);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel label_4 = new JLabel("[修改]");
@@ -193,5 +196,25 @@ public class SellerInfoPage extends JFrame {
 		label_5.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		label_5.setBounds(452, 342, 54, 25);
 		contentPane.add(label_5);
+		
+		JLabel label_6 = new JLabel("电话号码：");
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		label_6.setForeground(SystemColor.textHighlight);
+		label_6.setFont(new Font("楷体", Font.PLAIN, 25));
+		label_6.setBounds(60, 384, 125, 30);
+		contentPane.add(label_6);
+		
+		JLabel label_7 = new JLabel(SellerService.getSellerInfo().getPhone());
+		label_7.setHorizontalAlignment(SwingConstants.LEFT);
+		label_7.setFont(new Font("楷体", Font.PLAIN, 20));
+		label_7.setBounds(195, 380, 197, 42);
+		contentPane.add(label_7);
+		
+		JLabel label_8 = new JLabel("[修改]");
+		label_8.setHorizontalAlignment(SwingConstants.LEFT);
+		label_8.setForeground(Color.RED);
+		label_8.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+		label_8.setBounds(452, 390, 54, 25);
+		contentPane.add(label_8);
 	}
 }
