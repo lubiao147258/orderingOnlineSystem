@@ -522,7 +522,7 @@ public class MainPage extends JFrame {
 		table.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		table.setDefaultRenderer(Object.class, tcr);
 		
-		mod.addRow(new Object[]{"1","jack232","男","经济技术开发区江汉大学北区1栋","15926315478"});
+		//mod.addRow(new Object[]{"1","jack232","男","经济技术开发区江汉大学北区1栋","15926315478"});
 		
 		initModal();
 		
