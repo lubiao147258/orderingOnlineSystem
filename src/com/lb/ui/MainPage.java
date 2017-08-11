@@ -487,6 +487,10 @@ public class MainPage extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				lb_add.setForeground(Color.GRAY);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
 			
 		});
 		lb_add.setHorizontalAlignment(SwingConstants.CENTER);
