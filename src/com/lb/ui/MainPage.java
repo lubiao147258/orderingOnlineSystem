@@ -578,6 +578,19 @@ public class MainPage extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				lb_default.setForeground(Color.GRAY);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				if(row>=0){
+					if(UserService.setDefaultAddressService(selectUserId, Integer.parseInt((mod.getValueAt(row, 0).toString())))){
+						JOptionPane.showMessageDialog(MainPage.this, "修改成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						JOptionPane.showMessageDialog(MainPage.this, "修改失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}
+				}else{
+					JOptionPane.showMessageDialog(MainPage.this, "请选择你要设置为默认地址的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
 		});
 		lb_default.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_default.setForeground(Color.GRAY);
