@@ -187,6 +187,8 @@ public class LoginPage extends JFrame {
 					if(UserService.loginService(u)>=1){
 						//JOptionPane.showMessageDialog(LoginPage.this, "正在登陆。。。。!","提示",JOptionPane.INFORMATION_MESSAGE);
 						MainPage.selectUserId=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
+						StartOrderPage.userid=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
+						CartPage.userID=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						LoginPage.this.dispose();
 						new StartOrderPage().setVisible(true);
 					}else{

@@ -27,18 +27,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.lb.entity.Food;
+import com.lb.entity.Cart;
 import com.lb.service.SellerService;
 import com.lb.service.UserService;
-import com.lb.util.DBManager;
 
-public class StartOrderPage extends JFrame {
+public class CartPage extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8052016113358080909L;
-	public 	static int userid;
+	public static int userID;
 	private JPanel contentPane;
 	private Point origin = new Point();
 	private JTable table;
@@ -46,7 +45,8 @@ public class StartOrderPage extends JFrame {
 	private JTextField textField;
 	private int pageSize = 14;
 	private int pageNum = 1;
-	private int pageSum = (int) Math.ceil((UserService.getFoodInfo().size() / 14.0));
+	private int pageSum = (int) Math.ceil((UserService.getCartsInfo(userID).size() / 14.0));
+	
 
 	private JLabel label_2 = new JLabel();
 
@@ -57,7 +57,7 @@ public class StartOrderPage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StartOrderPage frame = new StartOrderPage();
+					CartPage frame = new CartPage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,9 +69,9 @@ public class StartOrderPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StartOrderPage() {
+	public CartPage() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		//System.out.println(userid);
+
 		setBounds(100, 100, 765, 612);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,8 +92,8 @@ public class StartOrderPage extends JFrame {
 		contentPane.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				Point p = StartOrderPage.this.getLocation();
-				StartOrderPage.this.setLocation(p.x + e.getX() - origin.x, p.y + e.getY() - origin.y);
+				Point p = CartPage.this.getLocation();
+				CartPage.this.setLocation(p.x + e.getX() - origin.x, p.y + e.getY() - origin.y);
 			}
 
 		});
@@ -103,23 +103,29 @@ public class StartOrderPage extends JFrame {
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(2, 81, 760, 443);
 		contentPane.add(scrollPane);
-		String[] cols = { "菜编 号", "菜 名", "类别", "价 格（元）" };
+		String[] cols = { "菜编号", "商品名称", "数量", "总价 格（元）" };
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		mod = new DefaultTableModel(cols, 0);
 		// mod.setRowCount(14);
 		table = new JTable(mod);
+		/*table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(1).setPreferredWidth(280);
+		table.getColumnModel().getColumn(2).setPreferredWidth(180);
+		table.getColumnModel().getColumn(3).setPreferredWidth(180);*/
 		table.setBackground(new Color(240, 240, 240));
 		table.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		table.setRowHeight(30);
 		table.getTableHeader().setReorderingAllowed(false);// 表头不可拖动
 		table.getTableHeader().setResizingAllowed(false);// 列大小不可改变
+		//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setDefaultRenderer(Object.class, tcr);
+		
 		scrollPane.setViewportView(table);
 
 		// mod.addRow(new Object[]{"1","重启鸡公煲","鸡肉","5"});
 
-		initModel(pageNum, pageSize);
+		initModel(pageNum, pageSize,userID);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 191, 255));
@@ -132,7 +138,7 @@ public class StartOrderPage extends JFrame {
 		lb_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				StartOrderPage.this.dispose();
+				CartPage.this.dispose();
 			}
 
 			@Override
@@ -155,7 +161,7 @@ public class StartOrderPage extends JFrame {
 		lb_min.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				StartOrderPage.this.setExtendedState(JFrame.ICONIFIED);
+				CartPage.this.setExtendedState(JFrame.ICONIFIED);
 			}
 
 			@Override
@@ -175,7 +181,7 @@ public class StartOrderPage extends JFrame {
 		lb_min.setOpaque(true);
 		panel.add(lb_min);
 
-		JLabel lblNewLabel = new JLabel("点餐系统 ");
+		JLabel lblNewLabel = new JLabel("我的购物车");
 		lblNewLabel.setFont(new Font("楷体", Font.BOLD, 30));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -197,7 +203,7 @@ public class StartOrderPage extends JFrame {
 		// textField.setText("搜 索");
 		textField.setHorizontalAlignment(SwingConstants.LEFT);
 		textField.setFont(new Font("宋体", Font.PLAIN, 18));
-		textField.setBounds(211, 20, 211, 39);
+		textField.setBounds(276, 20, 211, 39);
 		panel.add(textField);
 		textField.setColumns(10);
 
@@ -233,39 +239,47 @@ public class StartOrderPage extends JFrame {
 		label_4.setForeground(Color.WHITE);
 		label_4.setFont(new Font("楷体", Font.BOLD, 20));
 		label_4.setBackground(new Color(30, 144, 255));
-		label_4.setBounds(421, 20, 99, 38);
+		label_4.setBounds(486, 20, 99, 38);
 		panel.add(label_4);
 
 		JComboBox comboBox = new JComboBox();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBox.getSelectedIndex() == 0) {
-					initModel(pageNum, pageSize);
-					//new MainPage().setVisible(true);
-				}
-				if (comboBox.getSelectedIndex() == 1) {
-					//new MainPage().setVisible(true);
-					if(userid==0){
-						JOptionPane.showMessageDialog(StartOrderPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
+				if (comboBox.getSelectedIndex() == 0) {//主页
+					if(userID==0){
+						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}else{
-						//new CartPage().setVisible(true);
+						CartPage.this.dispose();
+						new StartOrderPage().setVisible(true);
 					}
+					
 				}
-				if (comboBox.getSelectedIndex() == 2) {
-					if(userid==0){
-						JOptionPane.showMessageDialog(StartOrderPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
+				/*if (comboBox.getSelectedIndex() == 1) {//订单
+					if(userID==0){
+						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}else{
-						StartOrderPage.this.dispose();
-						new CartPage().setVisible(true);
-					}
-				}
-				if (comboBox.getSelectedIndex() == 3) {
-					if(userid==0){
-						JOptionPane.showMessageDialog(StartOrderPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
-					}else{
-						StartOrderPage.this.dispose();
+						CartPage.this.dispose();
 						new MainPage().setVisible(true);
 					}
+					
+				}*/
+				/*if (comboBox.getSelectedIndex() == 2) {//购物车
+					if(userID==0){
+						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						CartPage.this.dispose();
+						new CartPage().setVisible(true);
+					}
+					
+				}*/
+				if (comboBox.getSelectedIndex() == 3) {//个人中心
+					if(userID==0){
+						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						CartPage.this.dispose();
+						new MainPage().setVisible(true);
+					}
+					
 				}
 			}
 		});
@@ -276,6 +290,12 @@ public class StartOrderPage extends JFrame {
 		comboBox.setBackground(new Color(255, 255, 255));
 		comboBox.setBounds(617, 0, 83, 25);
 		panel.add(comboBox);
+		
+		JLabel lblNewLabel_1 = new JLabel("删 除");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(700, 55, 54, 15);
+		panel.add(lblNewLabel_1);
 
 		JPanel panel_leftline = new JPanel();
 		panel_leftline.setBackground(new Color(0, 191, 255));
@@ -292,7 +312,7 @@ public class StartOrderPage extends JFrame {
 		panel_bottomline.setBounds(-2, 610, 779, 2);
 		contentPane.add(panel_bottomline);
 
-		JLabel label_3 = new JLabel("加入购物车");
+		JLabel label_3 = new JLabel("立即支付");
 		label_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -316,38 +336,7 @@ public class StartOrderPage extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
-				int row = table.getSelectedRow();
-				
-					if(row>=0){
-						if(userid==0){
-							JOptionPane.showMessageDialog(StartOrderPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
-						}else{
-							//System.out.println(userid);
-							int count  = UserService.getFoodCountById(Integer.parseInt(mod.getValueAt(row,0).toString()),userid);
-							if(count>=1){
-								String[]  objs = new String[]{String.valueOf((count+1)),String.valueOf(((count+1)*(UserService.getFoodPriceById((int) mod.getValueAt(row,0))))),mod.getValueAt(row,0).toString()};
-								if(DBManager.executeUpdate("update cart set food_count=?,total=? where food_Id=?", objs)){
-									JOptionPane.showMessageDialog(StartOrderPage.this, "添加成功!","提示",JOptionPane.INFORMATION_MESSAGE);
-								}else{
-									JOptionPane.showMessageDialog(StartOrderPage.this, "添加失败!","提示",JOptionPane.INFORMATION_MESSAGE);
-								}
-							}else{
-								int foodId = Integer.parseInt(mod.getValueAt(row,0).toString());
-								String[] objs = new String[]{String.valueOf(userid),mod.getValueAt(row,0).toString(),String.valueOf(1),String.valueOf(UserService.getFoodPriceById(foodId))};
-								if(DBManager.executeUpdate("insert into cart values(?,?,?,?)", objs)){
-									JOptionPane.showMessageDialog(StartOrderPage.this, "添加成功!","提示",JOptionPane.INFORMATION_MESSAGE);
-								}
-								else{
-									JOptionPane.showMessageDialog(StartOrderPage.this, "添加失败!","提示",JOptionPane.INFORMATION_MESSAGE);
-								}
-							}
-						}					
-						
-					}else{
-						JOptionPane.showMessageDialog(StartOrderPage.this, "请选择一行加入购车!","提示",JOptionPane.INFORMATION_MESSAGE);
-					}
-				
+				// new SellerInfoPage().setVisible(true);
 			}
 		});
 		label_3.setOpaque(true);
@@ -386,7 +375,7 @@ public class StartOrderPage extends JFrame {
 				if (pageNum > 1) {
 					pageNum--;
 				}
-				initModel(pageNum, pageSize);
+				initModel(pageNum, pageSize,userID);
 			}
 		});
 		label.setOpaque(true);
@@ -425,7 +414,7 @@ public class StartOrderPage extends JFrame {
 				if (pageNum < pageSum) {
 					pageNum++;
 				}
-				initModel(pageNum, pageSize);
+				initModel(pageNum, pageSize,userID);
 			}
 		});
 		label_1.setOpaque(true);
@@ -448,10 +437,10 @@ public class StartOrderPage extends JFrame {
 
 	}
 
-	private void initModel(int pageNum, int pageSize) {
+	private void initModel(int pageNum, int pageSize,int userId) {
 		mod.setRowCount(0);
-		for (Food food : SellerService.getFoodsBySize(pageNum, pageSize)) {
-			mod.addRow(new Object[] { food.getId(), food.getFoodName(),SellerService.getFoodTypeById(food.getType_id()), food.getPrice() });
+		for (Cart cart : UserService.getCartsBySize(pageNum, pageSize,userID)) {
+			mod.addRow(new Object[] { cart.getId(), SellerService.getFoodInfoById(cart.getFoodid()).getFoodName(),cart.getFoodcount(),cart.getTotal()});
 			//System.out.println(food.getIsOnsale());
 		}
 		label_2.setText("第" + pageNum + "页/共" + pageSum + "页");

@@ -1,40 +1,31 @@
 package com.lb.ui;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import java.awt.Color;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.lb.entity.Address;
 import com.lb.service.UserService;
 import com.lb.util.CheckEmail;
 import com.lb.util.DBManager;
-
-import javax.swing.JTable;
-import javax.swing.JList;
-import javax.swing.JPasswordField;
 
 public class MainPage extends JFrame {
 
@@ -49,6 +40,7 @@ public class MainPage extends JFrame {
 	private JPasswordField passwordField1;
 	private JPasswordField passwordField2;
 	private JTable table;
+	private DefaultTableModel mod;
 
 	/**
 	 * Launch the application.
@@ -137,6 +129,8 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//panel_center.setVisible(false);
+				MainPage.this.dispose();
+				new StartOrderPage().setVisible(true);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -158,6 +152,8 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//panel_center.setVisible(false);
+				MainPage.this.dispose();
+				new CartPage().setVisible(true);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -506,7 +502,7 @@ public class MainPage extends JFrame {
 		panel_dizhiguanli.add(scrollPane);
 		String[] cols = {"序号","用户名","性别","地址信息","电话"};
 		//String[] cols = {"","","","",""};
-		DefaultTableModel mod = new DefaultTableModel(cols, 0);
+		mod = new DefaultTableModel(cols, 0);
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		table = new JTable(mod);
@@ -525,7 +521,13 @@ public class MainPage extends JFrame {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		table.setDefaultRenderer(Object.class, tcr);
+		
 		mod.addRow(new Object[]{"1","jack232","男","经济技术开发区江汉大学北区1栋","15926315478"});
+		
+		initModal();
+		
+		
+		
 		scrollPane.setViewportView(table);
 		
 		JLabel lb_del = new JLabel("删除地址");
@@ -653,6 +655,10 @@ public class MainPage extends JFrame {
 							passwordField1.setText("");
 							passwordField2.setText("");
 						}
+					}else{
+						JOptionPane.showMessageDialog(MainPage.this, "输入的原始密码不正确!","提示",JOptionPane.INFORMATION_MESSAGE);
+						passwordField1.setText("");
+						passwordField2.setText("");
 					}
 				}
 			}
@@ -703,5 +709,12 @@ public class MainPage extends JFrame {
 			}
 			
 		});
+	}
+
+	public void initModal() {
+		mod.setRowCount(0);
+		for (Address address : UserService.getAddressInfoService(selectUserId)) {
+			mod.addRow(new Object[]{address.getId(),UserService.getUserInfoService(selectUserId).getUsername(),address.getSex(),address.getAddressdetail(),address.getPhone()});
+		}
 	}
 }

@@ -23,7 +23,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 
-public class SellerOrderManager extends JFrame {
+public class UserOrderPage extends JFrame {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public class SellerOrderManager extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SellerOrderManager frame = new SellerOrderManager();
+					UserOrderPage frame = new UserOrderPage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class SellerOrderManager extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SellerOrderManager() {
+	public UserOrderPage() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		setBounds(100, 100, 1074, 622);
@@ -77,8 +77,8 @@ public class SellerOrderManager extends JFrame {
 		contentPane.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e){
-				Point p = SellerOrderManager.this.getLocation();
-				SellerOrderManager.this.setLocation(p.x+e.getX()-origin.x, p.y+e.getY()-origin.y);
+				Point p = UserOrderPage.this.getLocation();
+				UserOrderPage.this.setLocation(p.x+e.getX()-origin.x, p.y+e.getY()-origin.y);
 			}
 			
 		});
@@ -88,7 +88,7 @@ public class SellerOrderManager extends JFrame {
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(2, 81, 1070, 443);
 		contentPane.add(scrollPane);
-		String[] cols = {"编号","店铺","用户名","电话","商品名","总价格","配送地址","配送状态","下单时间"};
+		String[] cols = {"编号","店铺","用户名","电话","商品名","总价格","配送地址","下单时间"};
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		mod = new DefaultTableModel(cols, 0);
@@ -106,26 +106,33 @@ public class SellerOrderManager extends JFrame {
 		table.getColumnModel().getColumn(4).setPreferredWidth(240);
 		table.getColumnModel().getColumn(5).setPreferredWidth(65);
 		table.getColumnModel().getColumn(6).setPreferredWidth(240);
-		table.getColumnModel().getColumn(7).setPreferredWidth(80);
-		table.getColumnModel().getColumn(8).setPreferredWidth(140);
+		table.getColumnModel().getColumn(7).setPreferredWidth(220);
+		//table.getColumnModel().getColumn(8).setPreferredWidth(140);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setDefaultRenderer(Object.class, tcr);	
 		scrollPane.setViewportView(table);
 		
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","2017/8/10 15:25:36"});
+		
 		
 		
 		
@@ -140,7 +147,7 @@ public class SellerOrderManager extends JFrame {
 		lb_close.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				SellerOrderManager.this.dispose();
+				UserOrderPage.this.dispose();
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -161,7 +168,7 @@ public class SellerOrderManager extends JFrame {
 		lb_min.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				SellerOrderManager.this.setExtendedState(JFrame.ICONIFIED);
+				UserOrderPage.this.setExtendedState(JFrame.ICONIFIED);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -179,11 +186,11 @@ public class SellerOrderManager extends JFrame {
 		lb_min.setOpaque(true);
 		panel.add(lb_min);
 		
-		JLabel lblNewLabel = new JLabel("商 家 后 台 管 理 界 面 ");
+		JLabel lblNewLabel = new JLabel("我 的 订 单");
 		lblNewLabel.setFont(new Font("楷体", Font.BOLD, 30));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(79, 10, 468, 60);
+		lblNewLabel.setBounds(79, 10, 232, 60);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
