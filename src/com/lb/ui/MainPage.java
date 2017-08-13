@@ -174,6 +174,8 @@ public class MainPage extends JFrame {
 		label_wodedingdan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				MainPage.this.dispose();
+				new UserOrderPage().setVisible(true);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {

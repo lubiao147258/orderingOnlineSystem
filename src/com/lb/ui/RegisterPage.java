@@ -195,7 +195,7 @@ public class RegisterPage extends JFrame {
 				yzm.setText(CreatCode.getCode());
 			}
 		});
-		System.out.println("验证码："+yzm.getText());
+		//System.out.println("验证码："+yzm.getText());
 		yzm.setFont(new Font("Segoe Print", Font.BOLD, 30));
 		yzm.setBounds(316, 263, 119, 38);
 		contentPane.add(yzm);

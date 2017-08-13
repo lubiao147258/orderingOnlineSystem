@@ -349,7 +349,8 @@ public class UserOrderPage extends JFrame {
 		label_3.setBackground(new Color(0, 191, 255));
 		label_3.setBounds(191, 549, 99, 38);
 		contentPane.add(label_3);
-		
+		System.out.println(userID);
+		System.out.println(UserService.getAddressInfoByIdService(UserService.getUserInfoService(userID).getDefaultAddressId()).getAddressdetail());
 		
 	
 	}
@@ -369,7 +370,7 @@ public class UserOrderPage extends JFrame {
 			}else{
 				status="已接单";
 			}
-			mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(userID).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(userID).getAddressdetail(),order.getTime(),paystatus,status});
+			mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(userID).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(UserService.getUserInfoService(userID).getDefaultAddressId()).getAddressdetail(),order.getTime(),paystatus,status});
 		}
 
 	}	

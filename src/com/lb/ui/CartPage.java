@@ -297,12 +297,6 @@ public class CartPage extends JFrame {
 		comboBox.setBackground(new Color(255, 255, 255));
 		comboBox.setBounds(617, 0, 83, 25);
 		panel.add(comboBox);
-		
-		JLabel lblNewLabel_1 = new JLabel("删 除");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(700, 55, 54, 15);
-		panel.add(lblNewLabel_1);
 
 		JPanel panel_leftline = new JPanel();
 		panel_leftline.setBackground(new Color(0, 191, 255));
@@ -351,6 +345,7 @@ public class CartPage extends JFrame {
 						for(int i=0;i<rows.length;i++){
 							total+=Double.parseDouble(mod.getValueAt(rows[i], 3).toString());
 						}
+						System.out.println(UserService.getUserInfoService(userID).getDefaultAddressId());
 						String[] objs = new String[]{String.valueOf(userID),String.valueOf(UserService.getUserInfoService(userID).getDefaultAddressId()),String.valueOf(total),"0",GetCurrentDateTime.getNowTime(),"0"};
 						if(DBManager.executeUpdate("insert into [order] values(?,?,?,?,?,?)", objs)){
 							List<FoodVO> lists = new ArrayList<>();
@@ -365,6 +360,12 @@ public class CartPage extends JFrame {
 								DBManager.executeUpdate("insert into [order_detail] values(?,?,?)", ob);
 							}
 							JOptionPane.showMessageDialog(CartPage.this, "下单成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+							for(int i =0;i<rows.length;i++){
+								DBManager.executeUpdate("delete from [cart] where cart_Id=?", new Integer[]{Integer.parseInt((mod.getValueAt(rows[i], 0).toString()))});
+								
+							}
+							initModel(pageNum, pageSize,userID);
+							
 						}else{
 							JOptionPane.showMessageDialog(CartPage.this, "下单失败!","提示",JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -473,6 +474,52 @@ public class CartPage extends JFrame {
 		label_2.setBackground(new Color(240, 240, 240));
 		label_2.setBounds(454, 548, 170, 38);
 		contentPane.add(label_2);
+		
+		JLabel label_5 = new JLabel("删除");
+		label_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_5.setBackground(new Color(18, 150, 193));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_5.setBackground(new Color(0, 191, 255));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_5.setBackground(new Color(7, 50, 93));
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_5.setBackground(new Color(18, 150, 193));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// new SellerInfoPage().setVisible(true);
+				int[] rows = table.getSelectedRows();
+				if(rows.length>0){
+					for(int i =0;i<rows.length;i++){
+						DBManager.executeUpdate("delete from [cart] where cart_Id=?", new Integer[]{Integer.parseInt((mod.getValueAt(rows[i], 0).toString()))});
+					}
+					initModel(pageNum, pageSize,userID);
+				}else{
+					JOptionPane.showMessageDialog(CartPage.this, "请选择要删除的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+			
+		});
+		label_5.setOpaque(true);
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setForeground(Color.WHITE);
+		label_5.setFont(new Font("楷体", Font.BOLD, 20));
+		label_5.setBackground(new Color(0, 191, 255));
+		label_5.setBounds(179, 548, 114, 38);
+		contentPane.add(label_5);
 
 	}
 
@@ -484,4 +531,5 @@ public class CartPage extends JFrame {
 		}
 		label_2.setText("第" + pageNum + "页/共" + pageSum + "页");
 	}
+		
 }

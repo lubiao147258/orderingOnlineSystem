@@ -226,6 +226,17 @@ public class StartOrderPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// new SellerInfoPage().setVisible(true);
+				mod.setRowCount(0);
+				for (Food food : SellerService.getFoodsBySize(pageNum, pageSize)) {
+					if(food.getFoodName().equals(textField.getText())||SellerService.getFoodTypeById(food.getType_id()).equals(textField.getText())){
+						mod.addRow(new Object[] { food.getId(), food.getFoodName(),SellerService.getFoodTypeById(food.getType_id()), food.getPrice() });
+					}else if(textField.getText().trim().length()==0){
+						initModel(pageNum, pageSize);
+					}
+					//System.out.println(food.getIsOnsale());
+				}
+				label_2.setText("第" + pageNum + "页/共" + pageSum + "页");
+				
 			}
 		});
 		label_4.setOpaque(true);
