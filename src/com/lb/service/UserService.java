@@ -8,6 +8,7 @@ import com.lb.entity.Address;
 import com.lb.entity.Cart;
 import com.lb.entity.Food;
 import com.lb.entity.User;
+import com.lb.util.DBManager;
 
 public class UserService {
 
@@ -70,6 +71,9 @@ public class UserService {
 	public static boolean setDefaultAddressService(int userId,int addressId){
 		return user.setDefaultAddress(userId, addressId);
 	}
+	public static Address getAddressInfoByIdService(int id){
+		return user.getAddressInfoById(id);
+	}
 		
 	//测试
 	public static void main(String[] args) {
@@ -89,6 +93,13 @@ public class UserService {
 //		System.out.println(delAddressService(2));
 		
 //		System.out.println(updateAddress(1,new Address("女","武汉市再次的某某地区","1554545454656")));
-		System.out.println(setDefaultAddressService(1,1));
+//		System.out.println(getAddressInfoByIdService(3).getSex());
+		int addressId=5;
+		String[] objs = new String[]{UserService.getAddressInfoByIdService(addressId).getSex(),UserService.getAddressInfoByIdService(addressId).getAddressdetail(),UserService.getAddressInfoByIdService(addressId).getPhone(),String.valueOf(addressId)};
+
+		if(DBManager.executeUpdate("update [address] set user_sex=?,address_detail=?,phone=? where address_Id=?", objs)){
+			System.out.println("ok");
+		}
+
 	}
 }

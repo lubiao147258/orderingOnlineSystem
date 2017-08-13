@@ -25,6 +25,8 @@ import com.lb.entity.User;
 import com.lb.service.UserService;
 import com.lb.util.CheckEmail;
 import com.lb.util.CreatCode;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
 public class RegisterPage extends JFrame {
 
@@ -68,30 +70,32 @@ public class RegisterPage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		this.setUndecorated(true);//去除边框
+		setLocationRelativeTo(null);//初始化位置（电脑中心）
 		
 		JLabel lab_name = new JLabel("用  户 名：");
 		lab_name.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		lab_name.setBounds(54, 32, 71, 15);
+		lab_name.setBounds(54, 58, 71, 15);
 		contentPane.add(lab_name);
 		
 		JLabel lab_psw = new JLabel("密      码：");
 		lab_psw.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		lab_psw.setBounds(54, 78, 71, 15);
+		lab_psw.setBounds(54, 111, 71, 15);
 		contentPane.add(lab_psw);
 		
 		JLabel lab_psw2 = new JLabel("确认密码：");
 		lab_psw2.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		lab_psw2.setBounds(54, 125, 71, 15);
+		lab_psw2.setBounds(54, 162, 71, 15);
 		contentPane.add(lab_psw2);
 		
 		JLabel lab_email = new JLabel("邮      箱：");
 		lab_email.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		lab_email.setBounds(54, 181, 71, 15);
+		lab_email.setBounds(54, 218, 71, 15);
 		contentPane.add(lab_email);
 		
 		JLabel lab_yzm = new JLabel("验  证 码：");
 		lab_yzm.setFont(new Font("微软雅黑", Font.PLAIN, 12));
-		lab_yzm.setBounds(54, 236, 71, 15);
+		lab_yzm.setBounds(54, 274, 71, 15);
 		contentPane.add(lab_yzm);
 		
 		JButton btn_register = new JButton("立即注册");
@@ -135,7 +139,7 @@ public class RegisterPage extends JFrame {
 		btn_register.setFont(new Font("微软雅黑", Font.PLAIN, 12));
 		btn_register.setFocusPainted(false);
 		
-		btn_register.setBounds(80, 298, 93, 23);
+		btn_register.setBounds(80, 333, 93, 23);
 		contentPane.add(btn_register);
 		
 		JLabel lab_backToLogin = new JLabel("我已有账号，返回登录！");
@@ -156,29 +160,29 @@ public class RegisterPage extends JFrame {
 			}
 		});
 		lab_backToLogin.setForeground(new Color(51, 153, 255));
-		lab_backToLogin.setBounds(319, 302, 132, 15);
+		lab_backToLogin.setBounds(319, 337, 132, 15);
 		contentPane.add(lab_backToLogin);
 		
 		textField_name = new JTextField();
-		textField_name.setBounds(133, 29, 199, 23);
+		textField_name.setBounds(135, 54, 199, 23);
 		contentPane.add(textField_name);
 		textField_name.setColumns(10);
 		
 		passwordField_psw1 = new JPasswordField();
-		passwordField_psw1.setBounds(133, 75, 199, 23);
+		passwordField_psw1.setBounds(135, 107, 199, 23);
 		contentPane.add(passwordField_psw1);
 		
 		passwordField_psw2 = new JPasswordField();
-		passwordField_psw2.setBounds(135, 122, 199, 23);
+		passwordField_psw2.setBounds(135, 158, 199, 23);
 		contentPane.add(passwordField_psw2);
 		
 		textField_email = new JTextField();
-		textField_email.setBounds(133, 177, 199, 23);
+		textField_email.setBounds(135, 214, 199, 23);
 		contentPane.add(textField_email);
 		textField_email.setColumns(10);
 		
 		textField_yzm = new JTextField();
-		textField_yzm.setBounds(135, 225, 132, 38);
+		textField_yzm.setBounds(135, 263, 132, 38);
 		contentPane.add(textField_yzm);
 		textField_yzm.setColumns(10);
 		
@@ -193,8 +197,54 @@ public class RegisterPage extends JFrame {
 		});
 		System.out.println("验证码："+yzm.getText());
 		yzm.setFont(new Font("Segoe Print", Font.BOLD, 30));
-		yzm.setBounds(316, 225, 119, 38);
+		yzm.setBounds(316, 263, 119, 38);
 		contentPane.add(yzm);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0, 191, 255));
+		panel.setBounds(0, 0, 500, 30);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel label = new JLabel("");
+		label.setOpaque(true);
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				RegisterPage.this.dispose();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label.setBackground(new Color(255, 0, 0));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label.setBackground(new Color(0, 191, 252));
+			}
+		});
+		label.setBounds(478, 0, 22, 22);
+		panel.add(label);
+		label.setIcon(new ImageIcon(RegisterPage.class.getResource("/image/关闭按钮.png")));
+		label.setOpaque(true);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBackground(new Color(0, 191, 255));
+		
+		JPanel panel_leftline = new JPanel();
+		panel_leftline.setBackground(new Color(0, 191, 255));
+		panel_leftline.setBounds(0, 29, 2, 371);
+		contentPane.add(panel_leftline);
+		
+		JPanel panel_rightline = new JPanel();
+		panel_rightline.setBackground(new Color(0, 191, 255));
+		panel_rightline.setBounds(498, 29, 2, 371);
+		contentPane.add(panel_rightline);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(0, 191, 255));
+		panel_1.setBounds(0, 398, 500, 2);
+		contentPane.add(panel_1);
 		//this.setUndecorated(true);//去除边框
 		this.setResizable(false);
 		contentPane.addMouseListener(new MouseAdapter() {
@@ -217,5 +267,4 @@ public class RegisterPage extends JFrame {
 		//setSize(430, 333);
 		setLocationRelativeTo(null);
 	}
-
 }

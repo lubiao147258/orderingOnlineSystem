@@ -103,7 +103,7 @@ public class CartPage extends JFrame {
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(2, 81, 760, 443);
 		contentPane.add(scrollPane);
-		String[] cols = { "菜编号", "商品名称", "数量", "总价 格（元）" };
+		String[] cols = { "序号", "商品名称", "数量", "总价 格（元）" };
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		mod = new DefaultTableModel(cols, 0);
@@ -312,7 +312,7 @@ public class CartPage extends JFrame {
 		panel_bottomline.setBounds(-2, 610, 779, 2);
 		contentPane.add(panel_bottomline);
 
-		JLabel label_3 = new JLabel("立即支付");
+		JLabel label_3 = new JLabel("立即下单");
 		label_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {

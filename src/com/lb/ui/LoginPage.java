@@ -189,6 +189,8 @@ public class LoginPage extends JFrame {
 						MainPage.selectUserId=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						StartOrderPage.userid=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						CartPage.userID=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
+						AddAddressInfo.userID=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
+						UpdateAddressPage.userID=UserService.getUserIdService(username.getText(), new String(passwordField.getPassword()));
 						LoginPage.this.dispose();
 						new StartOrderPage().setVisible(true);
 					}else{

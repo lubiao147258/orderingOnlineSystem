@@ -48,4 +48,6 @@ public interface IUser {
 	
 	List<Address> getAddressInfo(int userID);  //得到用户的地址信息
 	
+	Address getAddressInfoById(int id);		//获得一条地址信息
+	
 }

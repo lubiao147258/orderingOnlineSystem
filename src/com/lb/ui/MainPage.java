@@ -489,7 +489,8 @@ public class MainPage extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				MainPage.this.dispose();
+				new AddAddressInfo().setVisible(true);
 			}
 			
 		});
@@ -544,6 +545,28 @@ public class MainPage extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				lb_del.setForeground(Color.GRAY);
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int rows = table.getSelectedRow();
+				if(rows>0){
+					//System.out.println(UserService.getUserInfoService(selectUserId).getDefaultAddressId());
+					//System.out.println((int)mod.getValueAt(rows, 0));					
+					if(UserService.getUserInfoService(selectUserId).getDefaultAddressId()==(int)mod.getValueAt(rows, 0)){
+						JOptionPane.showMessageDialog(MainPage.this, "该地址是默认地址，无法删除!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}else{
+						if(DBManager.executeUpdate("delete from [address] where address_Id=? ", new String[]{String.valueOf(selectUserId)})){
+							JOptionPane.showMessageDialog(MainPage.this, "删除成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+							initModal();
+						}else{
+							JOptionPane.showMessageDialog(MainPage.this, "删除失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(MainPage.this, "请选择删除的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
 		});
 		lb_del.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_del.setForeground(Color.GRAY);
@@ -560,6 +583,12 @@ public class MainPage extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lb_update.setForeground(Color.GRAY);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = table.getSelectedRow();
+				UpdateAddressPage.addressId=(int) mod.getValueAt(row, 0);
+				new UpdateAddressPage().setVisible(true);
 			}
 		});
 		lb_update.setHorizontalAlignment(SwingConstants.CENTER);

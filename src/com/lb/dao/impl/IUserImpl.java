@@ -93,7 +93,7 @@ public class IUserImpl implements IUser {
 		}	
 		User user = new User(); 
 		try {
-			String sql = "select username,phone,email,password from [user] where user_Id =?";
+			String sql = "select username,phone,email,password,default_address_Id from [user] where user_Id =?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
@@ -102,6 +102,7 @@ public class IUserImpl implements IUser {
 				user.setPhone(resultSet.getString(2));
 				user.setEmail(resultSet.getString(3));
 				user.setPassword(resultSet.getString(4));
+				user.setDefaultAddressId(resultSet.getInt(5));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -434,6 +435,41 @@ public class IUserImpl implements IUser {
 			flag=true;
 		}
 		return flag;
+	}
+
+	@Override
+	public Address getAddressInfoById(int id) {
+		if (connection == null) {
+			return null;
+		}
+		Address address = new Address() ;
+		try {
+			String sql = "select * from [address] where address_Id=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				address.setSex(resultSet.getString(3));
+				address.setAddressdetail(resultSet.getString(4));
+				address.setPhone(resultSet.getString(5));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return address;
 	}
 
 }
