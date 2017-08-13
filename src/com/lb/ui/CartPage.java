@@ -261,15 +261,15 @@ public class CartPage extends JFrame {
 					}
 					
 				}
-				/*if (comboBox.getSelectedIndex() == 1) {//订单
+				if (comboBox.getSelectedIndex() == 1) {//订单
 					if(userID==0){
 						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}else{
 						CartPage.this.dispose();
-						new MainPage().setVisible(true);
+						new UserOrderPage().setVisible(true);
 					}
 					
-				}*/
+				}
 				/*if (comboBox.getSelectedIndex() == 2) {//购物车
 					if(userID==0){
 						JOptionPane.showMessageDialog(CartPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);

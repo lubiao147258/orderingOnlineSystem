@@ -197,6 +197,11 @@ public class UserOrderPage extends JFrame {
 			public void mouseExited(MouseEvent e) {
 				lblNewLabel_1.setBackground(new Color(0,191,252));
 			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new StartOrderPage().setVisible(true);
+				UserOrderPage.this.dispose();
+			}
 		});
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setIcon(new ImageIcon(SellerOrderManager.class.getResource("/image/返回.png")));
@@ -328,8 +333,13 @@ public class UserOrderPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int row = table.getSelectedRow();
-				UserOrderDetailPage.orderID=Integer.parseInt(mod.getValueAt(row, 0).toString());
-				new UserOrderDetailPage().setVisible(true);
+				if(row>=0){
+					UserOrderDetailPage.orderID=Integer.parseInt(mod.getValueAt(row, 0).toString());
+					new UserOrderDetailPage().setVisible(true);
+				}else{
+					JOptionPane.showMessageDialog(UserOrderPage.this, "请选着查看的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			}
 		});
 		label_3.setOpaque(true);

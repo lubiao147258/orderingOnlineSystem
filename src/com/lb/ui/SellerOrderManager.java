@@ -180,7 +180,7 @@ public class SellerOrderManager extends JFrame {
 		lblNewLabel.setFont(new Font("楷体", Font.BOLD, 30));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(60, 16, 324, 45);
+		lblNewLabel.setBounds(37, 15, 324, 55);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
