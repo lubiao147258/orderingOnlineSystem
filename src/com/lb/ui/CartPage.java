@@ -11,6 +11,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -28,8 +30,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.lb.entity.Cart;
+import com.lb.entity.FoodVO;
+import com.lb.entity.Order;
 import com.lb.service.SellerService;
 import com.lb.service.UserService;
+import com.lb.util.DBManager;
+import com.lb.util.GetCurrentDateTime;
 
 public class CartPage extends JFrame {
 
@@ -38,6 +44,7 @@ public class CartPage extends JFrame {
 	 */
 	private static final long serialVersionUID = 8052016113358080909L;
 	public static int userID;
+	public static double total =0.0d;
 	private JPanel contentPane;
 	private Point origin = new Point();
 	private JTable table;
@@ -103,7 +110,7 @@ public class CartPage extends JFrame {
 		scrollPane.setEnabled(false);
 		scrollPane.setBounds(2, 81, 760, 443);
 		contentPane.add(scrollPane);
-		String[] cols = { "序号", "商品名称", "数量", "总价 格（元）" };
+		String[] cols = { "序号", "商品名称", "数量", "总价格（元）" };
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		mod = new DefaultTableModel(cols, 0);
@@ -337,6 +344,38 @@ public class CartPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// new SellerInfoPage().setVisible(true);
+				
+				int[] rows = table.getSelectedRows();
+				if(rows.length>0){
+					if(UserService.getUserInfoService(userID).getDefaultAddressId()>0){
+						for(int i=0;i<rows.length;i++){
+							total+=Double.parseDouble(mod.getValueAt(rows[i], 3).toString());
+						}
+						String[] objs = new String[]{String.valueOf(userID),String.valueOf(UserService.getUserInfoService(userID).getDefaultAddressId()),String.valueOf(total),"0",GetCurrentDateTime.getNowTime(),"0"};
+						if(DBManager.executeUpdate("insert into [order] values(?,?,?,?,?,?)", objs)){
+							List<FoodVO> lists = new ArrayList<>();
+							for(int i=0;i<rows.length;i++){
+								FoodVO fvo = new FoodVO();
+								fvo.setFoodid(SellerService.getFoodIdByNameService(mod.getValueAt(rows[i], 1).toString().trim()));
+								fvo.setFoodcount(Integer.parseInt(mod.getValueAt(rows[i], 2).toString()));
+								lists.add(fvo);
+							}
+							for(FoodVO foodvo :lists){
+								Integer[] ob = new Integer[]{UserService.getMaxIdService(),foodvo.getFoodid(),foodvo.getFoodcount()};
+								DBManager.executeUpdate("insert into [order_detail] values(?,?,?)", ob);
+							}
+							JOptionPane.showMessageDialog(CartPage.this, "下单成功!","提示",JOptionPane.INFORMATION_MESSAGE);
+						}else{
+							JOptionPane.showMessageDialog(CartPage.this, "下单失败!","提示",JOptionPane.INFORMATION_MESSAGE);
+						}
+					}else{
+						JOptionPane.showMessageDialog(CartPage.this, "您还没有选择默认地址，请选择后在下单!","提示",JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				}else{
+					JOptionPane.showMessageDialog(CartPage.this, "请选择要提交的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			}
 		});
 		label_3.setOpaque(true);

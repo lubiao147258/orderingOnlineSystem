@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lb.entity.Food;
 import com.lb.entity.FoodType;
+import com.lb.entity.Order;
 import com.lb.entity.Seller;
 import com.lb.entity.SellerInfo;
 
@@ -19,6 +20,8 @@ public interface ISeller {
 	
 	List<Food> getFoodInfo();   //获得所有商品
 	
+	Integer getFoodIdByName(String name);  //通过菜名获得id
+	
 	Food getFoodInfoById(int id);//通过id获得Food对象
 	
 	Integer checkFoodTypeNameIsExists(String name);  //检查添加的菜类别是否已经存在
@@ -32,4 +35,6 @@ public interface ISeller {
 	SellerInfo getSellerInfo();//获取商家信息
 	
 	List<Food> getFoodsBySize(int pageNum,int pageSize);
+	
+	List<Order> getOrderInfo();
 }

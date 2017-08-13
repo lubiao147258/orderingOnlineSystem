@@ -248,7 +248,7 @@ public class StartOrderPage extends JFrame {
 					if(userid==0){
 						JOptionPane.showMessageDialog(StartOrderPage.this, "对不起，您还没有登录，无法完成此项操作!","提示",JOptionPane.INFORMATION_MESSAGE);
 					}else{
-						//new CartPage().setVisible(true);
+						new UserOrderPage().setVisible(true);
 					}
 				}
 				if (comboBox.getSelectedIndex() == 2) {

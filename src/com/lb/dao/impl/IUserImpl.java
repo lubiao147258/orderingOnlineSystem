@@ -15,6 +15,8 @@ import com.lb.dao.IUser;
 import com.lb.entity.Address;
 import com.lb.entity.Cart;
 import com.lb.entity.Food;
+import com.lb.entity.FoodVO;
+import com.lb.entity.Order;
 import com.lb.entity.User;
 import com.lb.util.DBManager;
 
@@ -470,6 +472,119 @@ public class IUserImpl implements IUser {
 			}
 		}
 		return address;
+	}
+
+	@Override
+	public Integer getMaxId() {
+		// TODO Auto-generated method stub
+		int id = 0;
+		if (connection == null) {
+			return null;
+		}
+		try {
+			String sql = "select max(order_Id) from [order]";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				id = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return id;
+	}
+
+	@Override
+	public List<Order> getOrderInfo(int userId) {
+		if (connection == null) {
+			return null;
+		}
+		List<Order> list = new ArrayList();
+		try {
+			String sql = "select * from [order] where user_Id=? ";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Order order = new Order();
+				order.setOrderid(resultSet.getInt(1));
+				order.setUserid(resultSet.getInt(2));
+				order.setAddressid(resultSet.getInt(3));
+				order.setTotal(resultSet.getDouble(4));
+				order.setPaystatus(resultSet.getInt(5));
+				order.setTime(resultSet.getString(6));
+				order.setStatus(resultSet.getInt(7));
+				list.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<FoodVO> getOrderDetailInfoByOrderId(int orderid) {
+		// TODO Auto-generated method stub
+		if (connection == null) {
+			return null;
+		}
+		List<FoodVO> list = new ArrayList();
+		try {
+			String sql = "select * from [order_detail] where order_Id=? ";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, orderid);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				FoodVO fvo = new FoodVO();
+				fvo.setOrderid(resultSet.getInt(1));
+				fvo.setFoodid(resultSet.getInt(2));
+				fvo.setFoodcount(resultSet.getInt(3));
+				list.add(fvo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }

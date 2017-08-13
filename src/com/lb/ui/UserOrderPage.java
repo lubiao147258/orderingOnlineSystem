@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -11,16 +13,21 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTextField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
+import com.lb.entity.Cart;
+import com.lb.entity.Order;
+import com.lb.service.SellerService;
+import com.lb.service.UserService;
+import com.lb.util.DBManager;
 
 
 public class UserOrderPage extends JFrame {
@@ -29,6 +36,7 @@ public class UserOrderPage extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 8052016113358080909L;
+	public static int userID;
 	private JPanel contentPane;
 	private Point origin = new Point();
 	private JTable table;
@@ -114,26 +122,10 @@ public class UserOrderPage extends JFrame {
 		table.setDefaultRenderer(Object.class, tcr);	
 		scrollPane.setViewportView(table);
 		
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付"});
+//		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付","未接单"});
+//		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付","未接单"});
 		
-		
-		
-		
+		initModel();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 191, 255));
@@ -296,6 +288,15 @@ public class UserOrderPage extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//new SellerInfoPage().setVisible(true);
+				int[] rows = table.getSelectedRows();
+				if(rows.length>0){
+					for(int i =0 ;i<rows.length;i++){
+						DBManager.executeUpdate("update [order] set paystatus = 1 where order_Id=?", new Integer[]{Integer.parseInt(mod.getValueAt(rows[i], 0).toString())});
+					}
+					 initModel();
+				}else{
+					JOptionPane.showMessageDialog(UserOrderPage.this, "请选择你要支付的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		label_5.setOpaque(true);
@@ -326,7 +327,9 @@ public class UserOrderPage extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
+				int row = table.getSelectedRow();
+				UserOrderDetailPage.orderID=Integer.parseInt(mod.getValueAt(row, 0).toString());
+				new UserOrderDetailPage().setVisible(true);
 			}
 		});
 		label_3.setOpaque(true);
@@ -337,79 +340,27 @@ public class UserOrderPage extends JFrame {
 		label_3.setBounds(191, 549, 99, 38);
 		contentPane.add(label_3);
 		
-		JLabel label = new JLabel("上一页");
-		label.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				label.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				label.setBackground(new Color(0,191,255));
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				label.setBackground(new Color(7,50,93));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				label.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
-			}
-		});
-		label.setOpaque(true);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("楷体", Font.BOLD, 20));
-		label.setBackground(new Color(0, 191, 255));
-		label.setBounds(451, 549, 99, 38);
-		contentPane.add(label);
 		
-		JLabel label_1 = new JLabel("下一页");
-		label_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				label_1.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				label_1.setBackground(new Color(0,191,255));
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				label_1.setBackground(new Color(7,50,93));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				label_1.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
-			}
-		});
-		label_1.setOpaque(true);
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("楷体", Font.BOLD, 20));
-		label_1.setBackground(new Color(0, 191, 255));
-		label_1.setBounds(740, 549, 99, 38);
-		contentPane.add(label_1);
-		
-		JLabel label_2 = new JLabel("第3页/共6页");
-		label_2.setOpaque(true);
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(Color.DARK_GRAY);
-		label_2.setFont(new Font("楷体", Font.BOLD, 20));
-		label_2.setBackground(new Color(240,240,240));
-		label_2.setBounds(560, 549, 170, 38);
-		contentPane.add(label_2);
-		
-		
-		
-		
+	
 	}
+	
+	private void initModel(){
+		mod.setRowCount(0);
+		for(Order order : UserService.getOrderInfoService(userID)){
+			String paystatus;
+			String status;
+			if(order.getPaystatus()==0){
+				paystatus="未支付";
+			}else{
+				paystatus="已支付";
+			}
+			if(order.getStatus()==0){
+				status="未接单";
+			}else{
+				status="已接单";
+			}
+			mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(userID).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(userID).getAddressdetail(),order.getTime(),paystatus,status});
+		}
+
+	}	
 }

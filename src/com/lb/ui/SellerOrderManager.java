@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -11,16 +13,21 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTextField;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
+import com.lb.entity.Cart;
+import com.lb.entity.Order;
+import com.lb.service.SellerService;
+import com.lb.service.UserService;
+import com.lb.util.DBManager;
 
 
 public class SellerOrderManager extends JFrame {
@@ -57,7 +64,7 @@ public class SellerOrderManager extends JFrame {
 	public SellerOrderManager() {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		setBounds(100, 100, 1074, 622);
+		setBounds(100, 100, 872, 622);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -86,9 +93,9 @@ public class SellerOrderManager extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(null);
 		scrollPane.setEnabled(false);
-		scrollPane.setBounds(2, 81, 1070, 443);
+		scrollPane.setBounds(2, 81, 868, 443);
 		contentPane.add(scrollPane);
-		String[] cols = {"编号","店铺","用户名","电话","商品名","总价格","配送地址","配送状态","下单时间"};
+		String[] cols = {"编号","店铺","用户名","总价格（元）","配送地址","下单时间","支付状态","是否接单"};
 		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();// 设置table内容居中
 		tcr.setHorizontalAlignment(JLabel.CENTER);
 		mod = new DefaultTableModel(cols, 0);
@@ -104,34 +111,24 @@ public class SellerOrderManager extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(80);
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		table.getColumnModel().getColumn(4).setPreferredWidth(240);
-		table.getColumnModel().getColumn(5).setPreferredWidth(65);
-		table.getColumnModel().getColumn(6).setPreferredWidth(240);
-		table.getColumnModel().getColumn(7).setPreferredWidth(80);
-		table.getColumnModel().getColumn(8).setPreferredWidth(140);
+		table.getColumnModel().getColumn(5).setPreferredWidth(180);
+		table.getColumnModel().getColumn(6).setPreferredWidth(65);
+		table.getColumnModel().getColumn(7).setPreferredWidth(65);
+		
+		//table.getColumnModel().getColumn(7).setPreferredWidth(220);
+		//table.getColumnModel().getColumn(8).setPreferredWidth(140);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setDefaultRenderer(Object.class, tcr);	
 		scrollPane.setViewportView(table);
 		
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
-		mod.addRow(new Object[]{"1","重启鸡公煲","张三","15126347896栋","重庆鸡公煲+米饭+王老吉","84.6","江汉大学北区一栋","派送中","2017/8/10 15:25:36"});
+//		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付","未接单"});
+//		mod.addRow(new Object[]{"1","重启鸡公煲","张三","84.6","江汉大学北区一栋","2017/8/10 15:25:36","已支付","未接单"});
 		
-		
+		 initModel();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 191, 255));
-		panel.setBounds(0, 0, 1074, 80);
+		panel.setBounds(0, 0, 872, 80);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -154,7 +151,7 @@ public class SellerOrderManager extends JFrame {
 		lb_close.setBackground(new Color(0, 191, 255));
 		lb_close.setIcon(new ImageIcon(AdminPage.class.getResource("/image/关闭按钮.png")));
 		lb_close.setHorizontalAlignment(SwingConstants.CENTER);
-		lb_close.setBounds(1050, 0, 25, 25);
+		lb_close.setBounds(847, 0, 25, 25);
 		panel.add(lb_close);
 		
 		JLabel lb_min = new JLabel("");
@@ -175,15 +172,15 @@ public class SellerOrderManager extends JFrame {
 		lb_min.setBackground(new Color(0, 191, 255));
 		lb_min.setHorizontalAlignment(SwingConstants.CENTER);
 		lb_min.setIcon(new ImageIcon(AdminPage.class.getResource("/image/最小化.png")));
-		lb_min.setBounds(1024, 0, 25, 25);
+		lb_min.setBounds(821, 0, 25, 25);
 		lb_min.setOpaque(true);
 		panel.add(lb_min);
 		
-		JLabel lblNewLabel = new JLabel("商 家 后 台 管 理 界 面 ");
+		JLabel lblNewLabel = new JLabel("后 台 订 单 管 理");
 		lblNewLabel.setFont(new Font("楷体", Font.BOLD, 30));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(79, 10, 468, 60);
+		lblNewLabel.setBounds(60, 16, 324, 45);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
@@ -198,6 +195,12 @@ public class SellerOrderManager extends JFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblNewLabel_1.setBackground(new Color(0,191,252));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//lblNewLabel_1.setBackground(new Color(0,191,252));
+				SellerOrderManager.this.dispose();
+				new AdminPage().setVisible(true);
 			}
 		});
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -219,7 +222,7 @@ public class SellerOrderManager extends JFrame {
 		textField.setText("搜 索");
 		textField.setHorizontalAlignment(SwingConstants.LEFT);
 		textField.setFont(new Font("宋体", Font.PLAIN, 18));
-		textField.setBounds(606, 20, 211, 39);
+		textField.setBounds(394, 21, 211, 39);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -251,7 +254,7 @@ public class SellerOrderManager extends JFrame {
 		label_4.setForeground(Color.WHITE);
 		label_4.setFont(new Font("楷体", Font.BOLD, 20));
 		label_4.setBackground(new Color(30, 144, 255));
-		label_4.setBounds(816, 20, 99, 38);
+		label_4.setBounds(604, 21, 99, 38);
 		panel.add(label_4);
 		
 		JPanel panel_leftline = new JPanel();
@@ -261,15 +264,55 @@ public class SellerOrderManager extends JFrame {
 		
 		JPanel panel_rightline = new JPanel();
 		panel_rightline.setBackground(new Color(0, 191, 255));
-		panel_rightline.setBounds(1072, 80, 2, 620);
+		panel_rightline.setBounds(870, 80, 2, 542);
 		contentPane.add(panel_rightline);
 		
 		JPanel panel_bottomline = new JPanel();
 		panel_bottomline.setBackground(new Color(18,150,193));
-		panel_bottomline.setBounds(-2, 620, 1202, 2);
+		panel_bottomline.setBounds(2, 620, 872, 2);
 		contentPane.add(panel_bottomline);
 		
-		JLabel label_3 = new JLabel("订单管理");
+		JLabel label_5 = new JLabel("立即接单");
+		label_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_5.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_5.setBackground(new Color(0,191,255));
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				label_5.setBackground(new Color(7,50,93));
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				label_5.setBackground(new Color(18,150,193));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//new SellerInfoPage().setVisible(true);
+				int[] rows = table.getSelectedRows();
+				if(rows.length>0){
+					for(int i =0 ;i<rows.length;i++){
+						DBManager.executeUpdate("update [order] set status = 1 where order_Id=?", new Integer[]{Integer.parseInt(mod.getValueAt(rows[i], 0).toString())});
+					}
+					 initModel();
+				}else{
+					JOptionPane.showMessageDialog(SellerOrderManager.this, "请选择你要支付的行!","提示",JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		label_5.setOpaque(true);
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		label_5.setForeground(Color.WHITE);
+		label_5.setFont(new Font("楷体", Font.BOLD, 20));
+		label_5.setBackground(new Color(0, 191, 255));
+		label_5.setBounds(38, 549, 99, 38);
+		contentPane.add(label_5);
+		
+		JLabel label_3 = new JLabel("订单详情");
 		label_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -289,7 +332,9 @@ public class SellerOrderManager extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
+				int row = table.getSelectedRow();
+				UserOrderDetailPage.orderID=Integer.parseInt(mod.getValueAt(row, 0).toString());
+				new UserOrderDetailPage().setVisible(true);
 			}
 		});
 		label_3.setOpaque(true);
@@ -297,80 +342,32 @@ public class SellerOrderManager extends JFrame {
 		label_3.setForeground(Color.WHITE);
 		label_3.setFont(new Font("楷体", Font.BOLD, 20));
 		label_3.setBackground(new Color(0, 191, 255));
-		label_3.setBounds(132, 549, 99, 38);
+		label_3.setBounds(191, 549, 99, 38);
 		contentPane.add(label_3);
 		
-		JLabel label = new JLabel("上一页");
-		label.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				label.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				label.setBackground(new Color(0,191,255));
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				label.setBackground(new Color(7,50,93));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				label.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
-			}
-		});
-		label.setOpaque(true);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font("楷体", Font.BOLD, 20));
-		label.setBackground(new Color(0, 191, 255));
-		label.setBounds(657, 549, 99, 38);
-		contentPane.add(label);
 		
-		JLabel label_1 = new JLabel("下一页");
-		label_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				label_1.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				label_1.setBackground(new Color(0,191,255));
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				label_1.setBackground(new Color(7,50,93));
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				label_1.setBackground(new Color(18,150,193));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//new SellerInfoPage().setVisible(true);
-			}
-		});
-		label_1.setOpaque(true);
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("楷体", Font.BOLD, 20));
-		label_1.setBackground(new Color(0, 191, 255));
-		label_1.setBounds(946, 549, 99, 38);
-		contentPane.add(label_1);
-		
-		JLabel label_2 = new JLabel("第3页/共6页");
-		label_2.setOpaque(true);
-		label_2.setHorizontalAlignment(SwingConstants.CENTER);
-		label_2.setForeground(Color.DARK_GRAY);
-		label_2.setFont(new Font("楷体", Font.BOLD, 20));
-		label_2.setBackground(new Color(240,240,240));
-		label_2.setBounds(766, 549, 170, 38);
-		contentPane.add(label_2);
-		
-		
+	
 	}
+	
+	private void initModel(){
+		mod.setRowCount(0);
+		for(Order order : SellerService.getOrderInfoService()){
+			String paystatus;
+			String status;
+			if(order.getPaystatus()==0){
+				paystatus="未支付";
+			}else{
+				paystatus="已支付";
+			}
+			if(order.getStatus()==0){
+				status="未接单";
+			}else{
+				status="已接单";
+			}
+			if(order.getPaystatus()==1){
+				mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(order.getUserid()).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(order.getUserid()).getAddressdetail(),order.getTime(),paystatus,status});
+			}
+		}
+
+	}	
 }

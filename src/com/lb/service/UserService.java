@@ -7,8 +7,9 @@ import com.lb.dao.impl.IUserImpl;
 import com.lb.entity.Address;
 import com.lb.entity.Cart;
 import com.lb.entity.Food;
+import com.lb.entity.FoodVO;
+import com.lb.entity.Order;
 import com.lb.entity.User;
-import com.lb.util.DBManager;
 
 public class UserService {
 
@@ -74,6 +75,24 @@ public class UserService {
 	public static Address getAddressInfoByIdService(int id){
 		return user.getAddressInfoById(id);
 	}
+	
+	public static Integer getMaxIdService(){
+		return user.getMaxId();
+	}
+	
+	public static List<Order> getOrderInfoService(int userId){
+		return user.getOrderInfo(userId);
+	}
+	
+	public static List<FoodVO> getOrderDetailInfoByOrderIdService(int orderid){
+		return user.getOrderDetailInfoByOrderId(orderid);
+	}
+	
+	
+	
+	
+	
+	
 		
 	//测试
 	public static void main(String[] args) {
@@ -94,12 +113,16 @@ public class UserService {
 		
 //		System.out.println(updateAddress(1,new Address("女","武汉市再次的某某地区","1554545454656")));
 //		System.out.println(getAddressInfoByIdService(3).getSex());
-		int addressId=5;
-		String[] objs = new String[]{UserService.getAddressInfoByIdService(addressId).getSex(),UserService.getAddressInfoByIdService(addressId).getAddressdetail(),UserService.getAddressInfoByIdService(addressId).getPhone(),String.valueOf(addressId)};
-
-		if(DBManager.executeUpdate("update [address] set user_sex=?,address_detail=?,phone=? where address_Id=?", objs)){
-			System.out.println("ok");
+//		int addressId=5;
+//		String[] objs = new String[]{UserService.getAddressInfoByIdService(addressId).getSex(),UserService.getAddressInfoByIdService(addressId).getAddressdetail(),UserService.getAddressInfoByIdService(addressId).getPhone(),String.valueOf(addressId)};
+//
+//		if(DBManager.executeUpdate("update [address] set user_sex=?,address_detail=?,phone=? where address_Id=?", objs)){
+//			System.out.println("ok");
+//		}
+		for(FoodVO order :getOrderDetailInfoByOrderIdService(5)){
+			System.out.println(order.getFoodid());
 		}
+		
 
 	}
 }

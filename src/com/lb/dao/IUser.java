@@ -5,6 +5,8 @@ import java.util.List;
 import com.lb.entity.Address;
 import com.lb.entity.Cart;
 import com.lb.entity.Food;
+import com.lb.entity.FoodVO;
+import com.lb.entity.Order;
 import com.lb.entity.User;
 
 /**
@@ -49,5 +51,11 @@ public interface IUser {
 	List<Address> getAddressInfo(int userID);  //得到用户的地址信息
 	
 	Address getAddressInfoById(int id);		//获得一条地址信息
+	
+	Integer getMaxId();//获得最大的id
+	
+	List<Order> getOrderInfo(int userId);   //获得id用户的订单
+	
+	List<FoodVO> getOrderDetailInfoByOrderId(int orderid);
 	
 }

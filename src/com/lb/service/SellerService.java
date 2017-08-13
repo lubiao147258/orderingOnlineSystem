@@ -6,6 +6,7 @@ import com.lb.dao.ISeller;
 import com.lb.dao.impl.ISellerImpl;
 import com.lb.entity.Food;
 import com.lb.entity.FoodType;
+import com.lb.entity.Order;
 import com.lb.entity.Seller;
 import com.lb.entity.SellerInfo;
 
@@ -68,6 +69,14 @@ public class SellerService {
 		return seller.getFoodsBySize(pageNum, pageSize);
 	}
 	
+	public static Integer getFoodIdByNameService(String name){
+		return seller.getFoodIdByName(name);
+	}
+	
+	public static List<Order> getOrderInfoService(){
+		return seller.getOrderInfo();
+	}
+	
 	//测试
 	public static void main(String[] args) {
 		//System.out.println(SellerService.addFoodService(new Food(1,"炒饭",20.0,1)));
@@ -79,7 +88,11 @@ public class SellerService {
 		
 //		System.out.println(getFoodInfoById(18).getIsOnsale()+"+++"+getFoodInfoById(18).getPrice());
 		
-		System.out.println(getSellerInfo().getShopname());
+//		System.out.println(getFoodIdByNameService("千页豆腐炒肉"));
+		for (Order order :getOrderInfoService() ) {
+			System.out.println(order.getPaystatus());
+		}
+		
 	}
 
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import com.lb.dao.ISeller;
 import com.lb.entity.Food;
 import com.lb.entity.FoodType;
+import com.lb.entity.Order;
 import com.lb.entity.Seller;
 import com.lb.entity.SellerInfo;
 import com.lb.util.DBManager;
@@ -426,6 +427,80 @@ public class ISellerImpl implements ISeller {
 		for (Food food : iSellerImpl.getFoodsBySize(1, 5)) {
 			System.out.println(food.getId() + " " + food.getFoodName()+" "+food.getIsOnsale());
 		}
+	}
+
+	@Override
+	public Integer getFoodIdByName(String name) {
+		int id = 0;
+		if (connection == null) {
+			return null;
+		}
+		try {
+			String sql = "select food_Id from [food] where food_name=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, name);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				id = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return id;
+	}
+
+	@Override
+	public List<Order> getOrderInfo() {
+		if (connection == null) {
+			return null;
+		}
+		List<Order> list = new ArrayList();
+		try {
+			String sql = "select * from [order] ";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Order order = new Order();
+				order.setOrderid(resultSet.getInt(1));
+				order.setUserid(resultSet.getInt(2));
+				order.setAddressid(resultSet.getInt(3));
+				order.setTotal(resultSet.getDouble(4));
+				order.setPaystatus(resultSet.getInt(5));
+				order.setTime(resultSet.getString(6));
+				order.setStatus(resultSet.getInt(7));
+				list.add(order);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (resultSet != null) {
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }
