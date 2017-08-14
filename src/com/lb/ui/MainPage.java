@@ -63,7 +63,7 @@ public class MainPage extends JFrame {
 	 * Create the frame.
 	 */
 	public MainPage() {
-		//System.out.println(selectUserId);
+		System.out.println(selectUserId);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
@@ -427,9 +427,9 @@ public class MainPage extends JFrame {
 			}
 		});
 		label_shoujihaoma3.setForeground(new Color(30, 144, 255));
-		if(label_shoujihaoma2.getText().trim()==null){
+		/*if("".equals(label_shoujihaoma2.getText().trim())){
 			label_shoujihaoma2.setText("未绑定");
-		}
+		}*/
 		
 		label_shoujihaoma3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		label_shoujihaoma3.setBounds(315, 270, 81, 15);
