@@ -422,13 +422,13 @@ public class ISellerImpl implements ISeller {
 		return lists;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ISellerImpl iSellerImpl = new ISellerImpl();
 		for (Food food : iSellerImpl.getFoodsBySize(1, 5)) {
 			System.out.println(food.getId() + " " + food.getFoodName()+" "+food.getIsOnsale());
 		}
 	}
-
+*/
 	@Override
 	public Integer getFoodIdByName(String name) {
 		int id = 0;

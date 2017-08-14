@@ -46,7 +46,7 @@ public class RegisterPage extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -58,7 +58,7 @@ public class RegisterPage extends JFrame {
 			}
 		});
 		
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -113,7 +113,7 @@ public class RegisterPage extends JFrame {
 							if(textField_yzm.getText().length()==0){
 								JOptionPane.showMessageDialog(RegisterPage.this, "验证码不能为空!","提示",JOptionPane.INFORMATION_MESSAGE);
 							}else{
-								if((yzm.getText().toLowerCase()).equals((textField_yzm.getText()).toLowerCase())){
+								if((yzm.getText().toLowerCase()).equals((textField_yzm.getText().toLowerCase()))){
 									SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 									User user = new User(textField_name.getText(),new String(passwordField_psw1.getPassword()),textField_email.getText(),-1,df.format(new Date()));
 									if(UserService.registerService(user)){

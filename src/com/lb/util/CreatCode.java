@@ -24,7 +24,7 @@ public class CreatCode {
 		return code;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(getCode().toLowerCase());
-	}
+	}*/
 }

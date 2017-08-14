@@ -46,7 +46,7 @@ public class UserOrderPage extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,7 +57,7 @@ public class UserOrderPage extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -349,8 +349,8 @@ public class UserOrderPage extends JFrame {
 		label_3.setBackground(new Color(0, 191, 255));
 		label_3.setBounds(191, 549, 99, 38);
 		contentPane.add(label_3);
-		System.out.println(userID);
-		System.out.println(UserService.getAddressInfoByIdService(UserService.getUserInfoService(userID).getDefaultAddressId()).getAddressdetail());
+		//System.out.println(userID);
+		//System.out.println(UserService.getAddressInfoByIdService(UserService.getUserInfoService(userID).getDefaultAddressId()).getAddressdetail());
 		
 	
 	}

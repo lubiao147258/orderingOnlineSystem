@@ -86,9 +86,9 @@ public class DBManager {
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		if(getConnection()!=null){
 			System.out.println("ok");
 		}
-	}
+	}*/
 }

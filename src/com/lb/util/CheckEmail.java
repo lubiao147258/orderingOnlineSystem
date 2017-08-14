@@ -15,7 +15,7 @@ public class CheckEmail {
 		//System.out.println(isMatched);    		
 		return isMatched;		
 	}
-	
+	/*
 	public static void main(String[] args) {
 		Scanner in = new  Scanner(System.in);
 		String email = in.nextLine();
@@ -24,6 +24,6 @@ public class CheckEmail {
 		}else{
 			System.out.println("budui");
 		}
-	}
+	}*/
 
 }

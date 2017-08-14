@@ -95,7 +95,7 @@ public class UserService {
 	
 		
 	//测试
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		User u = new User("lubiao","147258");
 //		IUser user =new IUserImpl();
 		
@@ -119,10 +119,11 @@ public class UserService {
 //		if(DBManager.executeUpdate("update [address] set user_sex=?,address_detail=?,phone=? where address_Id=?", objs)){
 //			System.out.println("ok");
 //		}
-		for(FoodVO order :getOrderDetailInfoByOrderIdService(5)){
-			System.out.println(order.getFoodid());
-		}
-		
+//		for(FoodVO order :getOrderDetailInfoByOrderIdService(5)){
+//			System.out.println(order.getFoodid());
+//		}
+//		
 
-	}
+//		System.out.println(user.userRegister(new User("8888","8888","12321@qq.com",-1,"时间")));
+//	}
 }

@@ -78,7 +78,7 @@ public class SellerService {
 	}
 	
 	//测试
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 		//System.out.println(SellerService.addFoodService(new Food(1,"炒饭",20.0,1)));
 //		System.out.println(SellerService.checkFoodNameIsExistsService("炒饭"));
 		
@@ -89,11 +89,11 @@ public class SellerService {
 //		System.out.println(getFoodInfoById(18).getIsOnsale()+"+++"+getFoodInfoById(18).getPrice());
 		
 //		System.out.println(getFoodIdByNameService("千页豆腐炒肉"));
-		for (Order order :getOrderInfoService() ) {
-			System.out.println(order.getPaystatus());
-		}
-		
-	}
+//		for (Order order :getOrderInfoService() ) {
+//			System.out.println(order.getPaystatus());
+//		}
+//		
+//	}
 
 }
 

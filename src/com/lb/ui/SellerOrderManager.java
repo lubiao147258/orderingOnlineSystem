@@ -45,7 +45,7 @@ public class SellerOrderManager extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -56,7 +56,7 @@ public class SellerOrderManager extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
@@ -365,7 +365,7 @@ public class SellerOrderManager extends JFrame {
 				status="已接单";
 			}
 			if(order.getPaystatus()==1){
-				mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(order.getUserid()).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(order.getUserid()).getAddressdetail(),order.getTime(),paystatus,status});
+				mod.addRow(new Object[]{order.getOrderid(),"陈二狗家常菜馆",UserService.getUserInfoService(order.getUserid()).getUsername(),order.getTotal(),UserService.getAddressInfoByIdService(UserService.getUserInfoService(order.getUserid()).getDefaultAddressId()).getAddressdetail(),order.getTime(),paystatus,status});
 			}
 		}
 

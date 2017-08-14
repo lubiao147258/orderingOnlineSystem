@@ -74,19 +74,19 @@ public class IUserImpl implements IUser {
 		// TODO Auto-generated method stub
 		boolean flag=false;
 		String[] userobject = new String[]{user.getUsername(),user.getPassword(),user.getEmail(),String.valueOf(user.getDefaultAddressId()),user.getCreateTime()};
-		if(DBManager.executeUpdate("insert into [user] values(?,?,?,?,?)", userobject)){
+		if(DBManager.executeUpdate("insert into [user] (username,password,email,default_address_Id,createTime) values(?,?,?,?,?)", userobject)){
 			flag=true;
 		}
 		return flag;
 	}
 	
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		IUserImpl iu = new IUserImpl();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		User user = new User("55","55","55",0,df.format(new Date()));
 		System.out.println(iu.userRegister(user));
-	}
+	}*/
 
 	@Override
 	public User getUserInfo(int id) {

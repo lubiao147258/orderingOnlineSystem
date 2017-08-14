@@ -20,9 +20,9 @@ private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
 		return dateFormat.format(currentTime);
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(getNowTime());
 		System.out.println(getNowTime(FORMAT));
-	}
+	}*/
 
 }
